@@ -1,25 +1,9 @@
-import { useState } from 'react';
-import { ArrowRight, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
-import {
-  BUSINESS_SEGMENTS,
-  INSURANCE_DIVISIONS,
-  type BusinessSegment,
-} from '../data/berkshireData';
+import { BUSINESS_SEGMENTS, INSURANCE_DIVISIONS } from '../data/berkshireData';
 import { ResilientImage } from './ResilientImage';
 
 export function BusinessesSection() {
-  const [selectedId, setSelectedId] = useState<string>(BUSINESS_SEGMENTS[0].id);
-  const activeSegment =
-    BUSINESS_SEGMENTS.find((seg) => seg.id === selectedId) ?? BUSINESS_SEGMENTS[0];
-
-  const handleSelectSegment = (segment: BusinessSegment) => {
-    setSelectedId(segment.id);
-    const spotlightEl = document.getElementById('segment-spotlight');
-    if (spotlightEl) {
-      spotlightEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  };
 
   return (
     <section id="businesses" className="bg-[#FFFFFF] text-[#0A1628] py-20 sm:py-24 lg:py-32">
@@ -114,323 +98,196 @@ export function BusinessesSection() {
           </div>
         </motion.div>
 
-        {/* Interactive Sector Dossier */}
+        {/* Operating Business Segments Header */}
         <motion.div
-          id="segment-spotlight"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-14"
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-16 sm:mt-20 pt-12 border-t border-[#0A1628]/12 flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-8"
         >
-          <div
-            role="tablist"
-            aria-label="Business segments"
-            className="flex flex-wrap gap-2 pb-8"
-          >
-            {BUSINESS_SEGMENTS.map((segment) => {
-              const isActive = segment.id === activeSegment.id;
-              return (
-                <button
-                  key={segment.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setSelectedId(segment.id)}
-                  className={`px-4 py-2.5 text-xs sm:text-sm font-medium transition-colors duration-200 whitespace-nowrap shrink-0 border ${
-                    isActive
-                      ? 'bg-[#0A1628] text-[#F9F7F3] border-[#0A1628]'
-                      : 'bg-[#F9F7F3] text-[#2A3444] border-[#0A1628]/12 hover:border-[#0A1628]/40'
-                  }`}
-                >
-                  <span className="font-mono text-[11px] opacity-70 mr-2 tabular-nums">
-                    {segment.index}.
-                  </span>
-                  {segment.name}
-                </button>
-              );
-            })}
+          <div className="max-w-2xl">
+            <p className="text-xs uppercase tracking-[0.16em] text-[#8B6B2B] font-semibold mb-3">
+              Operating Sectors · Consolidated Businesses
+            </p>
+            <h3
+              className="font-serif font-medium tracking-[-0.02em] leading-[1.1] text-[#0A1628] text-balance"
+              style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)' }}
+            >
+              Six core pillars across insurance, rail, energy, industry, and retail.
+            </h3>
           </div>
-
-          <div
-            role="tabpanel"
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch bg-[#F9F7F3] border border-[#0A1628]/10 p-6 sm:p-8 lg:p-10"
-          >
-            <figure className="lg:col-span-6 flex flex-col">
-              <div className="overflow-hidden bg-[#EFECE5] flex-1">
-                <ResilientImage
-                  src={activeSegment.imageSrc}
-                  alt={activeSegment.imageAlt}
-                  fallbackTitle={activeSegment.name}
-                  className={`w-full h-full min-h-[260px] lg:min-h-[400px] object-cover ${activeSegment.imagePosition ?? 'object-center'}`}
-                />
-              </div>
-              <figcaption className="mt-2.5 text-[11px] font-serif italic text-[#4A5568]">
-                {activeSegment.imageCaption}
-              </figcaption>
-            </figure>
-
-            <div className="lg:col-span-6 flex flex-col justify-between gap-6">
-              <div>
-                <div className="flex items-center gap-3 text-xs text-[#8B6B2B] font-mono mb-3">
-                  <span>{activeSegment.index}</span>
-                  <span aria-hidden="true">/</span>
-                  <span className="uppercase tracking-[0.14em] font-sans font-semibold">
-                    {activeSegment.name}
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-2xl sm:text-3xl font-medium text-[#0A1628] leading-tight">
-                  {activeSegment.headline}
-                </h3>
-
-                <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#2A3444]">
-                  {activeSegment.summary}
-                </p>
-
-                <p className="mt-4 text-xs sm:text-sm leading-relaxed text-[#4A5568] pt-4 border-t border-[#0A1628]/10">
-                  {activeSegment.stewardshipNote}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.14em] text-[#5B6472] font-semibold mb-3">
-                  Key Operating Subsidiaries &amp; Groups
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {activeSegment.subsidiaries.map((sub) => (
-                    <a
-                      key={sub.name}
-                      href={sub.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-start justify-between gap-3 p-3 bg-white border border-[#0A1628]/10 hover:border-[#8B6B2B] transition-colors"
-                    >
-                      <div className="min-w-0">
-                        <span className="block text-sm font-semibold text-[#0A1628] group-hover:text-[#8B6B2B] transition-colors truncate">
-                          {sub.name}
-                        </span>
-                        <span className="block text-xs text-[#5B6472] mt-0.5 line-clamp-1">
-                          {sub.note}
-                        </span>
-                      </div>
-                      <ArrowUpRight
-                        className="w-3.5 h-3.5 text-[#5B6472] group-hover:text-[#8B6B2B] shrink-0 mt-0.5"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <p className="text-sm text-[#4A5568] max-w-md lg:text-right">
+            Each sector maintains autonomous subsidiary management with direct access to principal
+            operating companies below.
+          </p>
         </motion.div>
 
-        {/* Asymmetric Visual Overview of All 6 Core Business Groups */}
-        <div className="mt-20 space-y-12">
-          {/* Row 1: Insurance & Reinsurance (5 cols) + BNSF Railway (7 cols) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
-            <motion.article
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.5 }}
-              className="lg:col-span-5 flex flex-col justify-between border border-[#0A1628]/10 bg-[#F9F7F3] p-6 sm:p-8"
-            >
-              <div>
-                <figure className="mb-6">
-                  <div className="overflow-hidden">
-                    <ResilientImage
-                      src={BUSINESS_SEGMENTS[0].imageSrc}
-                      alt={BUSINESS_SEGMENTS[0].imageAlt}
-                      fallbackTitle={BUSINESS_SEGMENTS[0].name}
-                      className="w-full aspect-[4/3] object-cover"
-                    />
-                  </div>
-                  <figcaption className="mt-2 text-[11px] font-serif italic text-[#4A5568]">
-                    {BUSINESS_SEGMENTS[0].imageCaption}
-                  </figcaption>
-                </figure>
-                <p className="text-xs font-mono text-[#8B6B2B] mb-2">
-                  01 · GEICO · BH Primary Group · BH Reinsurance Group
-                </p>
-                <h3 className="font-serif text-2xl font-medium text-[#0A1628] mb-3">
-                  {BUSINESS_SEGMENTS[0].name}
-                </h3>
-                <p className="text-sm leading-relaxed text-[#2A3444]">
-                  {BUSINESS_SEGMENTS[0].summary}
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[#0A1628]/10 flex items-center justify-between gap-4">
-                <span className="text-xs text-[#5B6472]">
-                  GEICO · Primary Group · Reinsurance Group
-                </span>
-                <button
-                  type="button"
-                  onClick={() => handleSelectSegment(BUSINESS_SEGMENTS[0])}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
-                >
-                  <span>Inspect Dossier</span>
-                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                </button>
-              </div>
-            </motion.article>
+        {/* Operating Business Segments — Stacked Two-Column Overview */}
+        <div className="space-y-8">
+            {BUSINESS_SEGMENTS.map((segment, idx) => {
+              const variant = idx % 3; // 0: Warm Alabaster, 1: Deep Navy, 2: Warm Limestone
+              const isDark = variant === 1;
 
-            <motion.article
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.5, delay: 0.08 }}
-              className="lg:col-span-7 flex flex-col justify-between bg-[#0A1628] text-[#F9F7F3] p-6 sm:p-8"
-            >
-              <div>
-                <figure className="mb-6">
-                  <div className="overflow-hidden">
-                    <ResilientImage
-                      src={BUSINESS_SEGMENTS[1].imageSrc}
-                      alt={BUSINESS_SEGMENTS[1].imageAlt}
-                      fallbackTitle={BUSINESS_SEGMENTS[1].name}
-                      className="w-full aspect-[16/9] object-cover"
-                    />
-                  </div>
-                  <figcaption className="mt-2 text-[11px] font-serif italic text-[#F9F7F3]/60">
-                    {BUSINESS_SEGMENTS[1].imageCaption}
-                  </figcaption>
-                </figure>
-                <p className="text-xs font-mono text-[#D4AF63] mb-2">
-                  02 · Freight Infrastructure
-                </p>
-                <h3 className="font-serif text-2xl sm:text-3xl font-medium text-[#F9F7F3] mb-3">
-                  {BUSINESS_SEGMENTS[1].name}
-                </h3>
-                <p className="text-sm sm:text-base leading-relaxed text-[#F9F7F3]/80 max-w-2xl">
-                  {BUSINESS_SEGMENTS[1].summary}
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/15 flex items-center justify-between gap-4">
-                <span className="text-xs text-[#F9F7F3]/65">
-                  Burlington Northern Santa Fe, LLC (BNSF)
-                </span>
-                <button
-                  type="button"
-                  onClick={() => handleSelectSegment(BUSINESS_SEGMENTS[1])}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#D4AF63] hover:text-[#E2C27D] transition-colors whitespace-nowrap shrink-0"
-                >
-                  <span>Inspect Dossier</span>
-                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                </button>
-              </div>
-            </motion.article>
-          </div>
+              const containerTheme =
+                variant === 0
+                  ? 'bg-[#F9F7F3] border border-[#0A1628]/10 text-[#0A1628]'
+                  : variant === 1
+                    ? 'bg-[#0A1628] border border-[#0A1628] text-[#F9F7F3]'
+                    : 'bg-[#EFECE5]/75 border border-[#0A1628]/12 text-[#0A1628]';
 
-          {/* Row 2: Berkshire Hathaway Energy Horizontal Feature */}
-          <motion.article
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch border border-[#0A1628]/12 bg-[#EFECE5]/65 p-6 sm:p-8"
-          >
-            <figure className="lg:col-span-7 flex flex-col">
-              <div className="overflow-hidden flex-1">
-                <ResilientImage
-                  src={BUSINESS_SEGMENTS[2].imageSrc}
-                  alt={BUSINESS_SEGMENTS[2].imageAlt}
-                  fallbackTitle={BUSINESS_SEGMENTS[2].name}
-                  className="w-full h-full aspect-[16/9] object-cover"
-                />
-              </div>
-              <figcaption className="mt-2 text-[11px] font-serif italic text-[#4A5568]">
-                {BUSINESS_SEGMENTS[2].imageCaption}
-              </figcaption>
-            </figure>
-            <div className="lg:col-span-5 flex flex-col justify-between">
-              <div>
-                <p className="text-xs font-mono text-[#8B6B2B] mb-2">
-                  03 · Utilities, Pipelines &amp; Power Generation
-                </p>
-                <h3 className="font-serif text-2xl sm:text-3xl font-medium text-[#0A1628] mb-3">
-                  {BUSINESS_SEGMENTS[2].name}
-                </h3>
-                <p className="text-sm sm:text-base leading-relaxed text-[#2A3444]">
-                  {BUSINESS_SEGMENTS[2].summary}
-                </p>
-                <p className="mt-4 text-xs leading-relaxed text-[#4A5568]">
-                  {BUSINESS_SEGMENTS[2].stewardshipNote}
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[#0A1628]/10 flex items-center justify-between gap-4">
-                <span className="text-xs text-[#5B6472]">
-                  BHE · MidAmerican · PacifiCorp · NV Energy
-                </span>
-                <button
-                  type="button"
-                  onClick={() => handleSelectSegment(BUSINESS_SEGMENTS[2])}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
-                >
-                  <span>Inspect Dossier</span>
-                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-          </motion.article>
+              const kickerBySegment: Record<string, string> = {
+                insurance: '01 · GEICO · BH Primary Group · BH Reinsurance Group',
+                railroad: '02 · Freight Infrastructure & Intermodal Rail',
+                energy: '03 · Utilities, Pipelines & Power Generation',
+                manufacturing: '04 · Industrial Products & Building Materials',
+                services: '05 · Wholesale Distribution, Aviation & B2B Services',
+                retailing: '06 · Highway Travel Centers & Consumer Brands',
+              };
 
-          {/* Row 3: Manufacturing, Service & McLane, Retailing & Pilot */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {BUSINESS_SEGMENTS.slice(3).map((segment, idx) => (
-              <motion.article
-                key={segment.id}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="flex flex-col justify-between border-t-2 border-[#0A1628] pt-6"
-              >
-                <div>
-                  <div className="flex items-baseline justify-between mb-4">
-                    <span className="font-mono text-xs text-[#8B6B2B]">{segment.index}</span>
-                    <span className="text-[11px] uppercase tracking-[0.12em] text-[#5B6472]">
-                      Operating Segment
-                    </span>
-                  </div>
-                  <figure className="mb-5">
-                    <div className="overflow-hidden bg-[#EFECE5]">
+              const linksLabelBySegment: Record<string, string> = {
+                insurance: 'Operating Divisions & Group Links',
+                railroad: 'Operating Company & Official Links',
+                energy: 'Operating Utilities & Group Links',
+                manufacturing: 'Operating Subsidiaries & Group Links',
+                services: 'Operating Companies & Group Links',
+                retailing: 'Operating Brands & Travel Center Links',
+              };
+
+              const cardLinks =
+                segment.id === 'railroad'
+                  ? [
+                      ...segment.subsidiaries,
+                      {
+                        name: 'Berkshire Subsidiaries Directory',
+                        url: 'https://www.berkshirehathaway.com/subs/sublinks.html',
+                        note: 'Official corporate subsidiary listing',
+                      },
+                    ]
+                  : segment.subsidiaries;
+
+              return (
+                <motion.article
+                  key={`unified-stacked-${segment.id}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.12 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start p-6 sm:p-8 ${containerTheme}`}
+                >
+                  <figure className="lg:col-span-6 flex flex-col">
+                    <div
+                      className={`overflow-hidden w-full aspect-[4/3] ${
+                        isDark ? 'bg-white/5' : 'bg-[#EFECE5]'
+                      }`}
+                    >
                       <ResilientImage
                         src={segment.imageSrc}
                         alt={segment.imageAlt}
                         fallbackTitle={segment.name}
-                        className={`w-full aspect-[4/3] object-cover ${segment.imagePosition ?? 'object-center'}`}
+                        className={`w-full h-full object-cover ${segment.imagePosition ?? 'object-center'}`}
                       />
                     </div>
-                    <figcaption className="mt-2 text-[11px] font-serif italic text-[#4A5568]">
+                    <figcaption
+                      className={`mt-2.5 text-[11px] font-serif italic ${
+                        isDark ? 'text-[#F9F7F3]/65' : 'text-[#4A5568]'
+                      }`}
+                    >
                       {segment.imageCaption}
                     </figcaption>
                   </figure>
-                  <h3 className="font-serif text-2xl font-medium text-[#0A1628] mb-2.5">
-                    {segment.name}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-[#2A3444]">{segment.summary}</p>
-                </div>
 
-                <div className="mt-6 pt-4 border-t border-[#0A1628]/10 flex items-center justify-between gap-3">
-                  <span className="text-xs text-[#5B6472] truncate">
-                    {segment.subsidiaries
-                      .slice(0, 2)
-                      .map((s) => s.name)
-                      .join(' · ')}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => handleSelectSegment(segment)}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
-                  >
-                    <span>Inspect Dossier</span>
-                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  </button>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+                  <div className="lg:col-span-6 flex flex-col justify-between gap-6">
+                    <div>
+                      <p
+                        className={`text-xs font-mono mb-2 tabular-nums ${
+                          isDark ? 'text-[#D4AF63]' : 'text-[#8B6B2B]'
+                        }`}
+                      >
+                        {kickerBySegment[segment.id] ?? `${segment.index} · ${segment.name}`}
+                      </p>
+                      <h4
+                        className={`font-serif text-2xl sm:text-3xl font-medium mb-3 ${
+                          isDark ? 'text-[#F9F7F3]' : 'text-[#0A1628]'
+                        }`}
+                      >
+                        {segment.name}
+                      </h4>
+                      <p
+                        className={`text-sm sm:text-base leading-relaxed ${
+                          isDark ? 'text-[#F9F7F3]/85' : 'text-[#2A3444]'
+                        }`}
+                      >
+                        {segment.summary}
+                      </p>
+                      <p
+                        className={`mt-3 text-xs sm:text-sm leading-relaxed ${
+                          isDark ? 'text-[#F9F7F3]/68' : 'text-[#4A5568]'
+                        }`}
+                      >
+                        {segment.stewardshipNote}
+                      </p>
+                    </div>
+
+                    <div
+                      className={`pt-5 border-t ${
+                        isDark ? 'border-white/15' : 'border-[#0A1628]/10'
+                      }`}
+                    >
+                      <p
+                        className={`text-[11px] uppercase tracking-[0.14em] font-semibold mb-3 ${
+                          isDark ? 'text-[#D4AF63]' : 'text-[#5B6472]'
+                        }`}
+                      >
+                        {linksLabelBySegment[segment.id] ?? 'Operating Companies & Groups'}
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        {cardLinks.map((sub) => (
+                          <a
+                            key={`segment-link-${segment.id}-${sub.name}`}
+                            href={sub.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`group flex items-start justify-between gap-2.5 p-3 border transition-colors ${
+                              isDark
+                                ? 'bg-white/5 border-white/15 hover:border-[#D4AF63]'
+                                : 'bg-white border-[#0A1628]/10 hover:border-[#8B6B2B]'
+                            }`}
+                          >
+                            <div className="min-w-0">
+                              <span
+                                className={`block text-xs sm:text-sm font-semibold transition-colors truncate ${
+                                  isDark
+                                    ? 'text-[#F9F7F3] group-hover:text-[#D4AF63]'
+                                    : 'text-[#0A1628] group-hover:text-[#8B6B2B]'
+                                }`}
+                              >
+                                {sub.name}
+                              </span>
+                              <span
+                                className={`block text-[11px] mt-0.5 line-clamp-1 ${
+                                  isDark ? 'text-[#F9F7F3]/65' : 'text-[#5B6472]'
+                                }`}
+                              >
+                                {sub.note}
+                              </span>
+                            </div>
+                            <ArrowUpRight
+                              className={`w-3.5 h-3.5 shrink-0 mt-0.5 transition-colors ${
+                                isDark
+                                  ? 'text-[#F9F7F3]/65 group-hover:text-[#D4AF63]'
+                                  : 'text-[#5B6472] group-hover:text-[#8B6B2B]'
+                              }`}
+                              aria-hidden="true"
+                            />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })}
         </div>
       </div>
     </section>
