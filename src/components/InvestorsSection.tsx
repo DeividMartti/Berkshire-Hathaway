@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, FileText, Search } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, FileText, Search } from 'lucide-react';
 import { motion } from 'motion/react';
-import { INVESTOR_DOCUMENTS, type InvestorDocument } from '../data/berkshireData';
+import { INVESTOR_RESOURCES, type InvestorResource } from '../data/berkshireData';
 
-const CATEGORIES: Array<'All' | InvestorDocument['category']> = [
+const CATEGORIES: Array<'All' | InvestorResource['category']> = [
   'All',
-  'Reports & Filings',
   'Shareholder Letters',
+  'Reports & Filings',
+  'Governance & Sustainability',
   'Meeting & Stock',
 ];
 
@@ -23,7 +24,7 @@ const SHARE_CLASS_SPECS = [
   },
   {
     attribute: 'Voting Power Ratio',
-    classA: '1 Full Vote per Share',
+    classA: 'Full voting rights',
     classB: '1 / 10,000th of Class A',
   },
   {
@@ -33,28 +34,30 @@ const SHARE_CLASS_SPECS = [
   },
   {
     attribute: 'Annual Meeting Access',
-    classA: 'Full shareholder credential eligibility',
-    classB: 'Full shareholder credential eligibility',
+    classA: 'Eligible for shareholder credentials',
+    classB: 'Eligible for shareholder credentials',
   },
 ];
 
 interface InvestorsSectionProps {
-  onOpenPost: (slug: string) => void;
+  onOpenPublication: (slug: string) => void;
 }
 
-export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
-  const [selectedCategory, setSelectedCategory] = useState<'All' | InvestorDocument['category']>('All');
+export function InvestorsSection({ onOpenPublication }: InvestorsSectionProps) {
+  const [selectedCategory, setSelectedCategory] = useState<'All' | InvestorResource['category']>(
+    'All'
+  );
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredDocuments = useMemo(() => {
+  const filteredResources = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
-    return INVESTOR_DOCUMENTS.filter((doc) => {
-      const matchesCategory = selectedCategory === 'All' || doc.category === selectedCategory;
+    return INVESTOR_RESOURCES.filter((item) => {
+      const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
       const matchesQuery =
         !query ||
-        doc.title.toLowerCase().includes(query) ||
-        doc.subtitle.toLowerCase().includes(query) ||
-        doc.code.toLowerCase().includes(query);
+        item.title.toLowerCase().includes(query) ||
+        item.subtitle.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query);
       return matchesCategory && matchesQuery;
     });
   }, [selectedCategory, searchQuery]);
@@ -86,9 +89,9 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
 
           <div className="lg:col-span-5 flex flex-col justify-end">
             <p className="text-sm sm:text-base leading-relaxed text-[#F9F7F3]/78">
-              Berkshire Hathaway communicates directly with all owners through unedited annual
-              reports, shareholder letters, regulatory SEC filings, and our annual meeting in
-              Omaha. Select any publication below to read its redesigned institutional dossier.
+              Complete directory of Berkshire Hathaway’s investor disclosures, leadership letters,
+              regulatory SEC filings, governance charters, and sustainability resources. Open each
+              editorial publication page or visit the primary official URL directly.
             </p>
           </div>
         </motion.div>
@@ -100,10 +103,10 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="mt-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="mt-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div
               role="tablist"
-              aria-label="Filter shareholder documents"
+              aria-label="Filter shareholder resources"
               className="flex flex-wrap gap-2"
             >
               {CATEGORIES.map((category) => {
@@ -115,7 +118,7 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 text-xs font-medium tracking-wide transition-colors duration-200 whitespace-nowrap shrink-0 border ${
+                    className={`px-3.5 py-2 text-xs font-medium tracking-wide transition-colors duration-200 whitespace-nowrap shrink-0 border ${
                       active
                         ? 'bg-[#D4AF63] text-[#0A1628] border-[#D4AF63]'
                         : 'bg-transparent text-[#F9F7F3]/80 border-white/15 hover:border-white/40 hover:text-[#F9F7F3]'
@@ -127,7 +130,7 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
               })}
             </div>
 
-            <div className="relative w-full md:w-72">
+            <div className="relative w-full lg:w-72">
               <Search
                 className="w-4 h-4 text-[#F9F7F3]/50 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
                 aria-hidden="true"
@@ -140,7 +143,7 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Filter filings, letters, reports..."
+                placeholder="Filter letters, filings, Wesco, governance..."
                 className="w-full pl-10 pr-4 py-2.5 text-sm bg-[#12223B] border border-white/15 text-[#F9F7F3] placeholder:text-[#F9F7F3]/45 focus:outline-none focus:border-[#D4AF63] transition-colors"
               />
             </div>
@@ -148,7 +151,7 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
 
           {/* Document Ledger */}
           <div className="mt-8 border-t border-white/15">
-            {filteredDocuments.length === 0 ? (
+            {filteredResources.length === 0 ? (
               <div className="py-12 text-center border-b border-white/15">
                 <p className="text-sm text-[#F9F7F3]/75 mb-3">
                   No investor resources match "{searchQuery}".
@@ -165,47 +168,58 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
                 </button>
               </div>
             ) : (
-              filteredDocuments.map((doc) => (
+              filteredResources.map((item) => (
                 <div
-                  key={doc.id}
+                  key={item.id}
                   className="group py-6 sm:py-7 border-b border-white/15 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-start lg:items-center hover:bg-white/[0.025] transition-colors px-2 sm:px-4 -mx-2 sm:-mx-4"
                 >
-                  <div className="lg:col-span-3 flex items-center gap-3">
-                    <FileText className="w-4 h-4 text-[#D4AF63] shrink-0" aria-hidden="true" />
+                  <div className="lg:col-span-3 flex items-start gap-3">
+                    <FileText className="w-4 h-4 text-[#D4AF63] shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
-                      <span className="block font-mono text-xs text-[#D4AF63] tabular-nums">
-                        {doc.code}
+                      <span className="block text-xs uppercase tracking-[0.1em] text-[#D4AF63] font-medium">
+                        {item.category}
                       </span>
                       <span className="block text-xs text-[#F9F7F3]/60 mt-0.5">
-                        {doc.frequency}
+                        {item.archivePeriod}
                       </span>
                     </div>
                   </div>
 
-                  <div className="lg:col-span-6">
+                  <div className="lg:col-span-5">
                     <h3 className="font-serif text-xl sm:text-2xl font-medium text-[#F9F7F3]">
                       <button
                         type="button"
-                        onClick={() => onOpenPost(doc.id)}
+                        onClick={() => onOpenPublication(item.publicationSlug)}
                         className="text-left hover:text-[#D4AF63] transition-colors"
                       >
-                        {doc.title}
+                        {item.title}
                       </button>
                     </h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-[#F9F7F3]/72">
-                      {doc.subtitle}
+                      {item.subtitle}
                     </p>
                   </div>
 
-                  <div className="lg:col-span-3 flex lg:justify-end">
+                  <div className="lg:col-span-4 flex flex-wrap lg:justify-end gap-2.5">
                     <button
                       type="button"
-                      onClick={() => onOpenPost(doc.id)}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium tracking-wide border border-white/25 text-[#F9F7F3] hover:bg-[#D4AF63] hover:text-[#0A1628] hover:border-[#D4AF63] transition-colors duration-200 whitespace-nowrap shrink-0"
+                      onClick={() => onOpenPublication(item.publicationSlug)}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium tracking-wide bg-[#D4AF63] text-[#0A1628] hover:bg-[#E2C27D] transition-colors duration-200 whitespace-nowrap shrink-0"
                     >
-                      <span>{doc.externalLabel}</span>
+                      <span>Open Publication</span>
                       <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                     </button>
+
+                    <a
+                      href={item.officialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`Official source: ${item.officialDomainLabel}`}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 text-xs font-medium tracking-wide border border-white/25 text-[#F9F7F3]/90 hover:border-[#D4AF63] hover:text-[#D4AF63] transition-colors duration-200 whitespace-nowrap shrink-0"
+                    >
+                      <span>Official Source</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    </a>
                   </div>
                 </div>
               ))
@@ -213,7 +227,7 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
           </div>
         </motion.div>
 
-        {/* Share Class Structural Reference Table (No simulated prices) */}
+        {/* Share Class Structural Reference Table */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -230,14 +244,25 @@ export function InvestorsSection({ onOpenPost }: InvestorsSectionProps) {
                 Class A &amp; Class B Common Stock Parity
               </h3>
             </div>
-            <button
-              type="button"
-              onClick={() => onOpenPost('stock-info')}
-              className="inline-flex items-center gap-2 text-xs font-medium text-[#D4AF63] hover:underline whitespace-nowrap shrink-0 self-start sm:self-end"
-            >
-              <span>Read Full Stock Comparison Publication</span>
-              <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-            </button>
+            <div className="flex flex-wrap items-center gap-4">
+              <button
+                type="button"
+                onClick={() => onOpenPublication('common-stock-information')}
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-[#D4AF63] hover:underline whitespace-nowrap shrink-0"
+              >
+                <span>Open Common Stock Publication</span>
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </button>
+              <a
+                href="https://www.berkshirehathaway.com/compab/compo.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-[#F9F7F3]/75 hover:text-[#D4AF63] whitespace-nowrap shrink-0"
+              >
+                <span>Official Source</span>
+                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </a>
+            </div>
           </div>
 
           <div className="overflow-x-auto border border-white/15 bg-[#0F1F38]">

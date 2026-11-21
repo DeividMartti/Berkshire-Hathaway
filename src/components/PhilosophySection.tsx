@@ -49,12 +49,11 @@ export function PhilosophySection() {
 
             <blockquote className="mt-8 py-7 border-y border-[#0A1628]/15">
               <p className="font-serif italic text-xl sm:text-2xl lg:text-[28px] leading-[1.4] text-[#0A1628]">
-                “Our favorite holding period is forever. We buy businesses to keep them,
-                preserve their institutional character, and compound intrinsic value over
-                generations.”
+                “When we own portions of outstanding businesses with outstanding managements, our
+                favorite holding period is forever.”
               </p>
               <footer className="mt-4 text-xs uppercase tracking-[0.14em] text-[#5B6472]">
-                Foundational Owner-Related Business Principle · Omaha, Nebraska
+                Warren E. Buffett · 1988 Letter to Shareholders (berkshirehathaway.com)
               </footer>
             </blockquote>
 

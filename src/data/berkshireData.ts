@@ -4,6 +4,14 @@ export interface SubsidiaryLink {
   note: string;
 }
 
+export interface InsuranceDivision {
+  name: string;
+  headquartersOrScope: string;
+  description: string;
+  entities: string[];
+  url: string;
+}
+
 export interface BusinessSegment {
   id: string;
   index: string;
@@ -26,15 +34,19 @@ export interface Milestone {
   detail: string;
 }
 
-export interface InvestorDocument {
+export interface InvestorResource {
   id: string;
-  code: string;
-  category: 'Reports & Filings' | 'Shareholder Letters' | 'Meeting & Stock';
+  publicationSlug: string;
+  category:
+    | 'Reports & Filings'
+    | 'Shareholder Letters'
+    | 'Governance & Sustainability'
+    | 'Meeting & Stock';
   title: string;
   subtitle: string;
-  frequency: string;
-  url: string;
-  externalLabel: string;
+  archivePeriod: string;
+  officialUrl: string;
+  officialDomainLabel: string;
 }
 
 export interface PhilosophyPrinciple {
@@ -45,62 +57,103 @@ export interface PhilosophyPrinciple {
 
 export interface NewsItem {
   id: string;
+  publicationSlug: string;
   date: string;
   year: '2026' | '2025';
   category: string;
   title: string;
   summary: string;
-  url: string;
+  officialUrl: string;
   featured?: boolean;
 }
 
 export const HERO_IMAGE = {
   src: './src/assets/images/hero_corporate_architecture_1795210559969.jpg',
-  alt: 'Monumental limestone and glass corporate headquarters tower illuminated at twilight against a deep navy sky',
+  alt: 'Illustrative architectural photograph of a limestone and glass corporate tower at twilight',
+  caption: 'Illustrative architectural imagery — conceptual visual representation.',
 };
 
 export const ABOUT_IMAGE = {
   src: './src/assets/images/about_omaha_heritage_1795210559250.jpg',
-  alt: 'Classic executive study and archival ledger room bathed in warm afternoon window light',
-  caption: 'Fig. 01 — Editorial representation of archival financial records and permanent capital stewardship.',
+  alt: 'Illustrative editorial photograph of a classical study with archival ledger volumes',
+  caption:
+    'Illustrative editorial visual — not a documentary photograph of Berkshire Hathaway executives, offices, or records.',
 };
 
 export const PHILOSOPHY_IMAGE = {
   src: './src/assets/images/philosophy_longterm_stewardship_1795210559321.jpg',
-  alt: 'Monumental travertine stone colonnade casting measured geometric shadows across a classical hall',
-  caption: 'Fig. 08 — Architectural proportion and permanence: enduring foundations built across decades.',
+  alt: 'Illustrative architectural study of travertine stone colonnades and natural daylight',
+  caption:
+    'Illustrative architectural imagery — conceptual representation of institutional permanence.',
 };
+
+export const INSURANCE_DIVISIONS: InsuranceDivision[] = [
+  {
+    name: 'GEICO',
+    headquartersOrScope: 'Chevy Chase, Maryland · Private Passenger Auto',
+    description:
+      'One of the largest private passenger automobile insurers in the United States, serving millions of policyholders directly through disciplined pricing, claims service, and underwriting.',
+    entities: ['GEICO Corporation', 'GEICO Indemnity', 'GEICO General Insurance'],
+    url: 'https://www.geico.com/',
+  },
+  {
+    name: 'Berkshire Hathaway Primary Group',
+    headquartersOrScope: 'Commercial, Specialty & Workers’ Compensation',
+    description:
+      'A federation of independently managed primary insurance carriers providing commercial auto, specialty casualty, medical professional liability, and workers’ compensation coverage.',
+    entities: [
+      'National Indemnity Company (Primary)',
+      'Berkshire Hathaway Specialty Insurance (BHSI)',
+      'Berkshire Hathaway Homestate Companies',
+      'GUARD Insurance Companies',
+      'MedPro Group',
+    ],
+    url: 'https://www.berkshirehathaway.com/subs/sublinks.html',
+  },
+  {
+    name: 'Berkshire Hathaway Reinsurance Group',
+    headquartersOrScope: 'Global Property, Casualty, Life & Health Reinsurance',
+    description:
+      'Provides global excess-of-loss, quota-share, catastrophe, and life/health reinsurance capacity backed by exceptional balance-sheet capital strength.',
+    entities: [
+      'National Indemnity Company (Reinsurance)',
+      'General Re Corporation (Gen Re)',
+      'Transatlantic Holdings (TransRe)',
+    ],
+    url: 'https://www.genre.com/',
+  },
+];
 
 export const MILESTONES: Milestone[] = [
   {
     year: '1965',
-    title: 'Partnership Control & Capital Allocation Pivot',
+    title: 'Partnership Control & Capital Redeployment',
     detail:
-      'Buffett Partnership Ltd. assumed control of Berkshire Hathaway Inc. in New Bedford, Massachusetts, beginning the disciplined redeployment of capital from textiles into enduring, cash-generative enterprises.',
+      'Buffett Partnership Ltd. assumed control of Berkshire Hathaway Inc., initiating the transition from New England textile manufacturing into insurance and diversified operating businesses.',
   },
   {
     year: '1967',
-    title: 'Entry into Property & Casualty Insurance',
+    title: 'Acquisition of National Indemnity Company',
     detail:
-      'Acquisition of National Indemnity Company and National Fire & Marine Insurance Company in Omaha established insurance float as a foundational engine for long-term reinvestment.',
+      'Purchase of National Indemnity Company and National Fire & Marine Insurance Company in Omaha established property-casualty insurance and underwriting float as core pillars of Berkshire.',
   },
   {
     year: '1996',
-    title: 'GEICO Wholly Owned & Class B Issuance',
+    title: 'GEICO Wholly Owned & Class B Common Stock',
     detail:
-      'Berkshire Hathaway completed the full acquisition of GEICO Corporation and introduced Class B common stock (BRK.B) to broaden accessible long-term ownership.',
+      'Berkshire Hathaway completed full ownership of GEICO Corporation and issued Class B common stock (BRK.B) to provide accessible ownership for long-term individual investors.',
   },
   {
     year: '2010',
     title: 'Acquisition of BNSF Railway',
     detail:
-      'Burlington Northern Santa Fe became a wholly owned subsidiary, anchoring Berkshire’s permanent commitment to North America’s essential freight rail infrastructure.',
+      'Burlington Northern Santa Fe, LLC became a wholly owned subsidiary, expanding Berkshire’s regulated and infrastructure operations across North American freight rail.',
   },
   {
     year: '2025–2026',
-    title: 'Generational Leadership Continuity',
+    title: 'Leadership Transition & Acquisitions',
     detail:
-      'In December 2025 Berkshire announced leadership appointments establishing Greg Abel as Chief Executive Officer, followed in September 2026 by Warren E. Buffett becoming Chairman Emeritus while remaining a Director and Howard G. Buffett being elected Chairman.',
+      'In December 2025 Berkshire announced leadership appointments naming Greg Abel Chief Executive Officer; in September 2026 Warren E. Buffett became Chairman Emeritus while remaining a Director and Howard G. Buffett was elected Chairman. Berkshire also completed acquisitions of OxyChem (Jan 2026) and Taylor Morrison (Jul 2026).',
   },
 ];
 
@@ -108,209 +161,270 @@ export const BUSINESS_SEGMENTS: BusinessSegment[] = [
   {
     id: 'insurance',
     index: '01',
-    name: 'Insurance',
-    headline: 'Underwriting discipline & global risk stewardship',
+    name: 'Insurance & Reinsurance',
+    headline: 'GEICO, Berkshire Hathaway Primary Group & Reinsurance Group',
     summary:
-      'Berkshire Hathaway’s insurance operations span personal auto coverage, commercial specialty lines, and global property-casualty and life reinsurance. Underwriting profit and disciplined risk selection remain paramount across every carrier.',
+      'Insurance and reinsurance sit at the center of Berkshire Hathaway’s operating model. Divided across GEICO, the Berkshire Hathaway Primary Group, and the Berkshire Hathaway Reinsurance Group, these operations underwrite personal, commercial specialty, and global catastrophe risks while generating durable investment float.',
     stewardshipNote:
-      'Policyholder float generated by disciplined underwriting provides low-cost, durable capital that supports investments across the broader enterprise.',
+      'Underwriting discipline takes precedence over premium volume across every carrier in the group.',
     imageSrc: './src/assets/images/segment_insurance_risk_1795210559117.jpg',
-    imageAlt: 'Aerial view of an ocean freight vessel navigating calm deep-navy waters at sunrise',
-    imageCaption: 'Fig. 02 — Commercial risk protection across personal, specialty, and global reinsurance lines.',
+    imageAlt: 'Illustrative aerial maritime photograph symbolizing global commercial underwriting and risk protection',
+    imageCaption:
+      'Illustrative editorial visual — representing global underwriting and risk stewardship (not a Berkshire facility).',
     imagePosition: 'object-center',
     aspectClass: 'aspect-[4/3]',
     officialUrl: 'https://www.berkshirehathaway.com/subs/sublinks.html',
     subsidiaries: [
       { name: 'GEICO', url: 'https://www.geico.com/', note: 'Private passenger auto insurance' },
-      { name: 'General Re', url: 'https://www.genre.com/', note: 'Global property, casualty & life reinsurance' },
-      { name: 'National Indemnity Company', url: 'https://www.nationalindemnity.com/', note: 'Commercial auto & general liability' },
-      { name: 'Berkshire Hathaway Specialty Insurance', url: 'https://bhspecialty.com/', note: 'Commercial property & casualty' },
-      { name: 'Berkshire Hathaway Homestate Companies', url: 'https://www.bhhc.com/', note: 'Workers’ compensation & commercial lines' },
+      {
+        name: 'Berkshire Hathaway Primary Group',
+        url: 'https://bhspecialty.com/',
+        note: 'BHSI, Homestate, GUARD & MedPro commercial lines',
+      },
+      {
+        name: 'Berkshire Hathaway Reinsurance Group',
+        url: 'https://www.genre.com/',
+        note: 'General Re, National Indemnity & global reinsurance',
+      },
+      {
+        name: 'National Indemnity Company',
+        url: 'https://www.nationalindemnity.com/',
+        note: 'Foundational Omaha commercial & reinsurance carrier',
+      },
     ],
   },
   {
     id: 'railroad',
     index: '02',
-    name: 'Railroad Transportation',
-    headline: 'Continental freight artery across North America',
+    name: 'BNSF Railway',
+    headline: 'North American freight rail & intermodal transportation',
     summary:
-      'Burlington Northern Santa Fe, LLC (BNSF) operates one of the largest freight rail networks in North America, connecting major West Coast and Gulf ports with inland industrial, agricultural, and consumer markets.',
+      'Burlington Northern Santa Fe, LLC (BNSF Railway) operates one of North America’s largest freight railroad networks, transporting consumer goods, industrial materials, agricultural commodities, and energy products across major continental corridors.',
     stewardshipNote:
-      'Managed as an enduring physical asset requiring continuous reinvestment in track infrastructure, locomotives, and intermodal capacity.',
+      'Reinvests continuously in track infrastructure, signaling safety, locomotives, and intermodal terminals.',
     imageSrc: './src/assets/images/segment_railroad_freight_1795210559571.jpg',
-    imageAlt: 'Double-stack intermodal freight train curving across golden Great Plains rail tracks at dawn',
-    imageCaption: 'Fig. 03 — Essential North American freight logistics spanning consumer, agricultural, and industrial supply chains.',
+    imageAlt: 'Illustrative photograph of an intermodal freight train crossing open plains at sunrise',
+    imageCaption:
+      'Illustrative editorial visual — representing North American freight rail logistics (not a documented BNSF asset).',
     imagePosition: 'object-center',
     aspectClass: 'aspect-[16/9]',
     officialUrl: 'https://www.bnsf.com/',
     subsidiaries: [
-      { name: 'BNSF Railway', url: 'https://www.bnsf.com/', note: 'North American freight rail & intermodal network' },
+      { name: 'BNSF Railway', url: 'https://www.bnsf.com/', note: 'North American freight rail network' },
     ],
   },
   {
     id: 'energy',
     index: '03',
-    name: 'Energy',
-    headline: 'Regulated utilities, transmission & renewable power',
+    name: 'Berkshire Hathaway Energy',
+    headline: 'Regulated utilities, natural gas pipelines & power infrastructure',
     summary:
-      'Berkshire Hathaway Energy Company owns a portfolio of locally managed regulated electric and natural gas utilities, interstate pipelines, and renewable generation assets serving millions of residential and commercial customers.',
+      'Berkshire Hathaway Energy (BHE) owns locally managed regulated electric and natural gas utilities, interstate natural gas pipelines, electricity distribution networks, and power generation facilities across North America and the United Kingdom.',
     stewardshipNote:
-      'Retaining 100% of earnings inside the energy platform for long periods enables multi-decade grid modernization and generation investments.',
+      'Retains earnings internally to fund multi-decade electric grid, pipeline, and generation capital programs.',
     imageSrc: './src/assets/images/segment_energy_infrastructure_1795210559992.jpg',
-    imageAlt: 'High-voltage transmission towers and utility wind turbines across open plains at twilight',
-    imageCaption: 'Fig. 04 — High-voltage transmission corridors and utility-scale generation infrastructure.',
+    imageAlt: 'Illustrative architectural photograph of high-voltage transmission towers and wind turbines',
+    imageCaption:
+      'Illustrative editorial visual — representing electric transmission and power generation infrastructure.',
     imagePosition: 'object-center',
     aspectClass: 'aspect-[16/9]',
     officialUrl: 'https://www.brkenergy.com/',
     subsidiaries: [
-      { name: 'Berkshire Hathaway Energy', url: 'https://www.brkenergy.com/', note: 'Global energy holding company' },
-      { name: 'MidAmerican Energy', url: 'https://www.midamericanenergy.com/', note: 'Regulated electric & natural gas utility' },
-      { name: 'PacifiCorp', url: 'https://www.pacificorp.com/', note: 'Western U.S. electric transmission & service' },
+      { name: 'Berkshire Hathaway Energy', url: 'https://www.brkenergy.com/', note: 'Energy holding company' },
+      { name: 'MidAmerican Energy', url: 'https://www.midamericanenergy.com/', note: 'Regulated electric & gas utility' },
+      { name: 'PacifiCorp', url: 'https://www.pacificorp.com/', note: 'Western U.S. electric utility & transmission' },
       { name: 'NV Energy', url: 'https://www.nvenergy.com/', note: 'Nevada regulated electric & gas utility' },
-      { name: 'Northern Powergrid', url: 'https://www.northernpowergrid.com/', note: 'UK electricity distribution network' },
+      { name: 'Northern Powergrid', url: 'https://www.northernpowergrid.com/', note: 'UK electricity distribution' },
     ],
   },
   {
     id: 'manufacturing',
     index: '04',
     name: 'Manufacturing',
-    headline: 'Precision industrial, building & consumer fabrication',
+    headline: 'Industrial products, building materials & consumer goods',
     summary:
-      'Berkshire’s manufacturing group encompasses aerospace metal alloys, specialty chemicals, engineered building materials, manufactured housing, industrial cutting tools, and household staples operating across global markets.',
+      'Berkshire Hathaway’s manufacturing operations produce aerospace metal alloys, specialty chemicals, engineered building materials, manufactured housing, industrial cutting tools, batteries, and apparel across international markets.',
     stewardshipNote:
-      'Each operating company preserves its engineering culture, brand heritage, and customer relationships under decentralized executive leadership.',
+      'Operating subsidiaries maintain independent engineering teams, brands, and manufacturing footprints.',
     imageSrc: './src/assets/images/segment_precision_manufacturing_1795210559166.jpg',
-    imageAlt: 'Precision machined titanium and steel turbine blades inspected inside a clean industrial hall',
-    imageCaption: 'Fig. 05 — Complex metallurgy, specialty chemicals, and precision industrial engineering.',
+    imageAlt: 'Illustrative industrial photograph of precision machined metal turbine components',
+    imageCaption:
+      'Illustrative editorial visual — representing precision aerospace and industrial manufacturing.',
     imagePosition: 'object-center',
     aspectClass: 'aspect-[4/3]',
     officialUrl: 'https://www.berkshirehathaway.com/subs/sublinks.html',
     subsidiaries: [
       { name: 'Precision Castparts Corp.', url: 'https://www.precast.com/', note: 'Aerospace & power metal components' },
       { name: 'The Lubrizol Corporation', url: 'https://www.lubrizol.com/', note: 'Specialty chemicals & fluid technologies' },
-      { name: 'Marmon Holdings', url: 'https://www.marmon.com/', note: 'Diversified industrial manufacturing group' },
-      { name: 'Johns Manville', url: 'https://www.jm.com/', note: 'Insulation & engineered building products' },
-      { name: 'Shaw Industries', url: 'https://shawinc.com/', note: 'Flooring & surface solutions' },
+      { name: 'Marmon Holdings', url: 'https://www.marmon.com/', note: 'Diversified industrial manufacturing' },
+      { name: 'Johns Manville', url: 'https://www.jm.com/', note: 'Insulation & engineered building materials' },
+      { name: 'Shaw Industries', url: 'https://shawinc.com/', note: 'Flooring & surface products' },
       { name: 'Clayton Homes', url: 'https://www.claytonhomes.com/', note: 'Manufactured & site-built housing' },
-      { name: 'OxyChem', url: 'https://www.oxy.com/', note: 'Basic & vinyls chemical manufacturing (acquired Jan 2026)' },
-    ],
-  },
-  {
-    id: 'retailing',
-    index: '05',
-    name: 'Retailing',
-    headline: 'Iconic regional and national consumer franchises',
-    summary:
-      'From regional home-furnishing superstores and storied confectionery kitchens to fine jewelry houses and quick-service food franchising, Berkshire’s retail businesses are built on multi-generational customer trust.',
-    stewardshipNote:
-      'Many retail leaders joined Berkshire directly from founding families seeking a permanent custodian that would protect their reputation and workforce.',
-    imageSrc: './src/assets/images/segment_retailing_craft_1795210559242.jpg',
-    imageAlt: 'Warm heritage retail boutique interior featuring travertine counters and brass vitrines',
-    imageCaption: 'Fig. 06 — Heritage retail craftsmanship spanning home furnishings, fine jewelry, and confections.',
-    imagePosition: 'object-center',
-    aspectClass: 'aspect-[4/3]',
-    officialUrl: 'https://www.berkshirehathaway.com/subs/sublinks.html',
-    subsidiaries: [
-      { name: 'See’s Candies', url: 'https://www.sees.com/', note: 'Heritage American boxed chocolates & confections' },
-      { name: 'Nebraska Furniture Mart', url: 'https://www.nfm.com/', note: 'Home furnishings, appliances & electronics' },
-      { name: 'Borsheims Fine Jewelry', url: 'https://www.borsheims.com/', note: 'Omaha fine jewelry & timepieces' },
-      { name: 'Helzberg Diamonds', url: 'https://www.helzberg.com/', note: 'National fine jewelry retailer' },
-      { name: 'International Dairy Queen', url: 'https://www.dairyqueen.com/', note: 'Global quick-service restaurant franchisor' },
-      { name: 'RC Willey Home Furnishings', url: 'https://www.rcwilley.com/', note: 'Western regional home furnishings' },
+      { name: 'OxyChem', url: 'https://www.oxy.com/', note: 'Chemical manufacturing (acquisition completed Jan 2026)' },
     ],
   },
   {
     id: 'services',
-    index: '06',
-    name: 'Services',
-    headline: 'Specialized aviation, distribution & B2B infrastructure',
+    index: '05',
+    name: 'Service & Distribution (incl. McLane)',
+    headline: 'Supply-chain logistics, private aviation & B2B services',
     summary:
-      'Berkshire’s service enterprises deliver mission-critical logistics, fractional private aviation, pilot simulation training, electronic component distribution, commercial trailer leasing, and corporate press dissemination.',
+      'Berkshire’s service businesses encompass nationwide wholesale grocery and foodservice distribution through McLane Company, fractional private aviation via NetJets, pilot simulator training at FlightSafety International, electronic component distribution, and corporate communications.',
     stewardshipNote:
-      'High-reliability operational standards and deep domain specialization create durable competitive advantages across B2B markets.',
+      'Built on high-volume distribution reliability, aviation safety standards, and long-term B2B customer contracts.',
     imageSrc: './src/assets/images/segment_aviation_services_1795210559521.jpg',
-    imageAlt: 'Executive business jet positioned in a sunlit architectural hangar opening onto a dawn runway',
-    imageCaption: 'Fig. 07 — Private aviation, simulator flight training, and nationwide supply-chain services.',
+    imageAlt: 'Illustrative commercial photograph of a midsize executive aircraft inside a sunlit hangar',
+    imageCaption:
+      'Illustrative editorial visual — representing corporate aviation and B2B service operations (not an official Berkshire hangar).',
     imagePosition: 'object-[18%_55%]',
     aspectClass: 'aspect-[4/3]',
     officialUrl: 'https://www.berkshirehathaway.com/subs/sublinks.html',
     subsidiaries: [
-      { name: 'NetJets', url: 'https://www.netjets.com/', note: 'Fractional private aviation & fleet operations' },
-      { name: 'FlightSafety International', url: 'https://www.flightsafety.com/', note: 'Commercial & business aviation training' },
       { name: 'McLane Company', url: 'https://www.mclaneco.com/', note: 'Wholesale grocery & foodservice distribution' },
-      { name: 'Business Wire', url: 'https://www.businesswire.com/', note: 'Global regulatory & corporate news distribution' },
-      { name: 'TTI, Inc.', url: 'https://www.tti.com/', note: 'Authorized electronic component distributor' },
-      { name: 'XTRA Lease', url: 'https://www.xtralease.com/', note: 'Over-the-road commercial trailer leasing' },
+      { name: 'NetJets', url: 'https://www.netjets.com/', note: 'Fractional private aviation & fleet operations' },
+      { name: 'FlightSafety International', url: 'https://www.flightsafety.com/', note: 'Aviation simulation & pilot training' },
+      { name: 'TTI, Inc.', url: 'https://www.tti.com/', note: 'Electronic component distribution' },
+      { name: 'Business Wire', url: 'https://www.businesswire.com/', note: 'Regulatory & corporate news distribution' },
+      { name: 'XTRA Lease', url: 'https://www.xtralease.com/', note: 'Commercial semi-trailer leasing' },
+    ],
+  },
+  {
+    id: 'retailing',
+    index: '06',
+    name: 'Retailing & Travel Centers (incl. Pilot)',
+    headline: 'Pilot Travel Centers, home furnishings, jewelry & consumer brands',
+    summary:
+      'Across consumer retail and highway travel infrastructure, Berkshire owns a controlling interest in Pilot Travel Centers alongside iconic retail franchises in home furnishings, fine jewelry, confections, and quick-service restaurants.',
+    stewardshipNote:
+      'Rooted in multi-generational brand loyalty, regional scale, and founder-led retail heritage.',
+    imageSrc: './src/assets/images/segment_retailing_craft_1795210559242.jpg',
+    imageAlt: 'Illustrative commercial photograph of a heritage retail boutique interior',
+    imageCaption:
+      'Illustrative editorial visual — representing consumer retail craftsmanship (not a specific store interior).',
+    imagePosition: 'object-center',
+    aspectClass: 'aspect-[4/3]',
+    officialUrl: 'https://www.berkshirehathaway.com/subs/sublinks.html',
+    subsidiaries: [
+      { name: 'Pilot Travel Centers', url: 'https://pilotflyingj.com/', note: 'North American highway travel centers & fuel retail' },
+      { name: 'Nebraska Furniture Mart', url: 'https://www.nfm.com/', note: 'Home furnishings, electronics & appliances' },
+      { name: 'See’s Candies', url: 'https://www.sees.com/', note: 'Heritage American chocolates & confections' },
+      { name: 'Borsheims Fine Jewelry', url: 'https://www.borsheims.com/', note: 'Omaha fine jewelry & timepieces' },
+      { name: 'Helzberg Diamonds', url: 'https://www.helzberg.com/', note: 'National fine jewelry stores' },
+      { name: 'International Dairy Queen', url: 'https://www.dairyqueen.com/', note: 'Quick-service restaurant franchisor' },
     ],
   },
 ];
 
-export const INVESTOR_DOCUMENTS: InvestorDocument[] = [
+export const INVESTOR_RESOURCES: InvestorResource[] = [
   {
-    id: 'annual-reports',
-    code: 'DOC-IR-01',
+    id: 'annual-interim-reports',
+    publicationSlug: 'annual-interim-reports',
     category: 'Reports & Filings',
     title: 'Annual & Interim Reports',
     subtitle:
-      'Audited Form 10-K annual financial statements and Form 10-Q quarterly interim reports detailing consolidated operating earnings and balance sheet strength.',
-    frequency: 'Annual & Quarterly',
-    url: 'https://www.berkshirehathaway.com/reports.html',
-    externalLabel: 'Read Reports Guide',
+      'Consolidated Form 10-K annual reports and Form 10-Q quarterly interim financial statements published by Berkshire Hathaway Inc.',
+    archivePeriod: 'Periodic Official Reports',
+    officialUrl: 'https://www.berkshirehathaway.com/reports.html',
+    officialDomainLabel: 'berkshirehathaway.com/reports.html',
   },
   {
-    id: 'shareholder-letters',
-    code: 'DOC-IR-02',
+    id: 'warren-buffett-letters',
+    publicationSlug: 'warren-buffett-letters',
     category: 'Shareholder Letters',
-    title: 'Annual Letters to Shareholders',
+    title: 'Warren Buffett’s Letters to Shareholders',
     subtitle:
-      'Complete historical archive of annual shareholder letters authored since 1977, alongside communications from Chief Executive Officer Greg Abel and Warren E. Buffett.',
-    frequency: 'Annual Archive (1977–Present)',
-    url: 'https://www.berkshirehathaway.com/letters/letters.html',
-    externalLabel: 'Read Letters Archive',
+      'Official archive of annual letters written by Warren E. Buffett to Berkshire Hathaway shareholders from 1977 onward.',
+    archivePeriod: 'Archive · 1977–Present',
+    officialUrl: 'https://www.berkshirehathaway.com/letters/letters.html',
+    officialDomainLabel: 'berkshirehathaway.com/letters',
+  },
+  {
+    id: 'greg-abel-letters',
+    publicationSlug: 'greg-abel-letters',
+    category: 'Shareholder Letters',
+    title: 'Greg Abel’s Letters to Shareholders',
+    subtitle:
+      'Annual shareholder communications from Chief Executive Officer Greg Abel, hosted alongside the official Berkshire Hathaway Letters archive.',
+    archivePeriod: 'Executive Communications',
+    officialUrl: 'https://www.berkshirehathaway.com/letters/letters.html',
+    officialDomainLabel: 'berkshirehathaway.com/letters',
+  },
+  {
+    id: 'special-letters-warren-charlie',
+    publicationSlug: 'special-letters-warren-charlie',
+    category: 'Shareholder Letters',
+    title: 'Special Letters from Warren & Charlie',
+    subtitle:
+      'Commemorative 50th-anniversary special letters by Warren E. Buffett and Charles T. Munger reflecting on Berkshire Hathaway’s past, present, and future.',
+    archivePeriod: 'Published 2015 (50th Anniversary)',
+    officialUrl: 'https://www.berkshirehathaway.com/SpecialLetters/WEBCTMLtr.html',
+    officialDomainLabel: 'berkshirehathaway.com/SpecialLetters',
+  },
+  {
+    id: 'wesco-charlie-munger-letters',
+    publicationSlug: 'wesco-charlie-munger-letters',
+    category: 'Shareholder Letters',
+    title: 'Charlie Munger’s Letters to Wesco Shareholders',
+    subtitle:
+      'Historical archive of annual shareholder letters authored by Charles T. Munger for Wesco Financial Corporation.',
+    archivePeriod: 'Wesco Financial Archive',
+    officialUrl: 'https://www.berkshirehathaway.com/wesco/WescoHome.html',
+    officialDomainLabel: 'berkshirehathaway.com/wesco',
   },
   {
     id: 'sec-filings',
-    code: 'DOC-IR-03',
+    publicationSlug: 'sec-filings',
     category: 'Reports & Filings',
-    title: 'SEC Filings & EDGAR Repository',
+    title: 'SEC Filings',
     subtitle:
-      'Direct access to U.S. Securities and Exchange Commission filings (CIK 0001067983), including Form 10-K, 10-Q, 8-K, Proxy Statements (DEF 14A), and Form 13F.',
-    frequency: 'Continuous Regulatory',
-    url: 'https://www.sec.gov/edgar/browse/?CIK=0001067983',
-    externalLabel: 'Read Filings Guide',
+      'Regulatory filings submitted to the U.S. Securities and Exchange Commission under CIK 0001067983 (Forms 10-K, 10-Q, 8-K, DEF 14A, 13F, and 4).',
+    archivePeriod: 'SEC EDGAR · CIK 0001067983',
+    officialUrl: 'https://www.sec.gov/edgar/browse/?CIK=0001067983',
+    officialDomainLabel: 'sec.gov/edgar',
   },
   {
-    id: 'annual-meeting',
-    code: 'DOC-IR-04',
+    id: 'annual-meeting-information',
+    publicationSlug: 'annual-meeting-information',
     category: 'Meeting & Stock',
-    title: 'Annual Shareholders Meeting',
+    title: 'Annual Meeting Information',
     subtitle:
-      'Official Shareholder’s Guide, proxy materials, credential instructions, and schedule details for the annual meeting held in Omaha, Nebraska.',
-    frequency: 'Annual · Omaha, NE',
-    url: 'https://www.berkshirehathaway.com/sharehold.html',
-    externalLabel: 'Read Meeting Guide',
+      'Official Shareholder’s Guide, proxy materials, credential instructions, and Omaha meeting event notices.',
+    archivePeriod: 'Annual Gathering · Omaha, NE',
+    officialUrl: 'https://www.berkshirehathaway.com/sharehold.html',
+    officialDomainLabel: 'berkshirehathaway.com/sharehold.html',
   },
   {
-    id: 'stock-info',
-    code: 'DOC-IR-05',
+    id: 'common-stock-information',
+    publicationSlug: 'common-stock-information',
     category: 'Meeting & Stock',
-    title: 'Common Stock Information (Class A & Class B)',
+    title: 'Common Stock Information',
     subtitle:
-      'Official comparative memorandum explaining voting rights, economic parity (1:1,500 ratio), and conversion terms between NYSE-listed BRK.A and BRK.B shares.',
-    frequency: 'NYSE: BRK.A / BRK.B',
-    url: 'https://www.berkshirehathaway.com/compab.pdf',
-    externalLabel: 'Read Stock Memo',
+      'Official comparative rights, conversion rules (1 Class A = 1,500 Class B economic rights), and transfer agent details for NYSE: BRK.A and BRK.B.',
+    archivePeriod: 'NYSE: BRK.A / BRK.B',
+    officialUrl: 'https://www.berkshirehathaway.com/compab/compo.html',
+    officialDomainLabel: 'berkshirehathaway.com/compab',
   },
   {
-    id: 'governance-docs',
-    code: 'DOC-IR-06',
-    category: 'Reports & Filings',
-    title: 'Corporate Governance & Committee Charters',
+    id: 'corporate-governance',
+    publicationSlug: 'corporate-governance',
+    category: 'Governance & Sustainability',
+    title: 'Corporate Governance',
     subtitle:
-      'Corporate Governance Guidelines, Audit Committee Charter, Governance, Compensation and Nominating Committee Charter, and Insider Trading Policy.',
-    frequency: 'Board Policies',
-    url: 'https://www.berkshirehathaway.com/govern/govern.html',
-    externalLabel: 'Read Governance Guide',
+      'Corporate Governance Guidelines, Audit Committee Charter, Governance, Compensation and Nominating Committee Charter, and Code of Business Conduct and Ethics.',
+    archivePeriod: 'Board Charters & Policies',
+    officialUrl: 'https://www.berkshirehathaway.com/govern/govern.html',
+    officialDomainLabel: 'berkshirehathaway.com/govern',
+  },
+  {
+    id: 'sustainability-disclosures',
+    publicationSlug: 'sustainability-disclosures',
+    category: 'Governance & Sustainability',
+    title: 'Sustainability',
+    subtitle:
+      'Information regarding the Berkshire Hathaway Sustainability Leadership Council, subsidiary environmental reporting, and consolidated EEO-1 workforce data.',
+    archivePeriod: 'Environmental & Workforce Data',
+    officialUrl: 'https://www.berkshirehathaway.com/sustainability/sustainabilityintro.html',
+    officialDomainLabel: 'berkshirehathaway.com/sustainability',
   },
 ];
 
@@ -319,99 +433,106 @@ export const PHILOSOPHY_PRINCIPLES: PhilosophyPrinciple[] = [
     number: '01',
     title: 'Permanent Capital Horizon',
     description:
-      'Businesses are acquired to be owned forever. Operating leaders make capital allocation and infrastructure decisions around decades-long durability rather than quarterly market cycles.',
+      'Acquisitions are structured for permanent ownership, enabling operating managers to allocate capital across multi-decade infrastructure and brand horizons.',
   },
   {
     number: '02',
-    title: 'Radical Decentralization',
+    title: 'Decentralized Operating Autonomy',
     description:
-      'Subsidiaries operate autonomously with their own chief executives, brands, and cultures. Omaha headquarters maintains an exceptionally lean corporate staff focused strictly on capital allocation and stewardship.',
+      'Subsidiary chief executives run their businesses independently, preserving local accountability, specialized expertise, and customer culture while Omaha focuses on capital allocation.',
   },
   {
     number: '03',
-    title: 'Fortress Financial Strength',
+    title: 'Conservative Financial Fortress',
     description:
-      'Maintaining abundant liquidity, conservative leverage, and diverse non-correlated earnings streams ensures Berkshire Hathaway remains an anchor of stability under any economic climate.',
+      'Substantial liquidity, modest leverage, and diversified earnings from insurance, rail, energy, manufacturing, service, and retail sustain institutional resilience.',
   },
   {
     number: '04',
-    title: 'Alignment with Long-Term Owners',
+    title: 'Owner-Oriented Candor',
     description:
-      'Management communicates candidly with shareholders as business partners—reporting both successes and mistakes plainly in annual letters and at the Omaha annual meeting.',
+      'Described in Berkshire’s Owner’s Manual, corporate communications address all shareholders as business partners with plain-spoken reporting of both strengths and mistakes.',
   },
 ];
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
     id: 'thanksgiving-2026',
+    publicationSlug: 'news-thanksgiving-2026',
     date: 'November 16, 2026',
     year: '2026',
-    category: 'Executive Message',
+    category: 'Corporate Announcement',
     title: 'Thanksgiving Message from Warren Buffett',
     summary:
-      'Warren E. Buffett published his annual November letter reflecting on Berkshire Hathaway’s stewardship, philanthropic commitments, and gratitude toward shareholders and operating leaders.',
-    url: 'https://www.berkshirehathaway.com/news/2026news.html',
+      'Official Thanksgiving message from Warren E. Buffett published in Berkshire Hathaway’s 2026 news releases archive.',
+    officialUrl: 'https://www.berkshirehathaway.com/news/2026news.html',
     featured: true,
   },
   {
     id: 'q3-2026-earnings',
+    publicationSlug: 'news-q3-2026-earnings',
     date: 'November 7, 2026',
     year: '2026',
     category: 'Financial Results',
-    title: 'Third Quarter 2026 Earnings Release',
+    title: 'Third Quarter Earnings 2026',
     summary:
-      'Consolidated third-quarter financial results covering insurance underwriting, BNSF Railway, Berkshire Hathaway Energy, and manufacturing, service, and retailing operations.',
-    url: 'https://www.berkshirehathaway.com/news/2026news.html',
+      'Official third-quarter 2026 earnings release covering Berkshire Hathaway’s consolidated insurance and non-insurance operations.',
+    officialUrl: 'https://www.berkshirehathaway.com/news/2026news.html',
   },
   {
     id: 'chairmanship-2026',
+    publicationSlug: 'news-chairmanship-2026',
     date: 'September 18, 2026',
     year: '2026',
     category: 'Board Governance',
-    title: 'Warren E. Buffett Becomes Chairman Emeritus; Howard G. Buffett Elected Chairman',
+    title: 'Warren E. Buffett Becomes Chairman Emeritus, Remains Director; Howard G. Buffett Elected Chairman',
     summary:
-      'Berkshire Hathaway announced that Warren E. Buffett transitioned to Chairman Emeritus while remaining a Director, and the Board elected Howard G. Buffett as Chairman.',
-    url: 'https://www.berkshirehathaway.com/news/2026news.html',
+      'Board leadership announcement confirming Warren E. Buffett’s transition to Chairman Emeritus while remaining a Director, and the election of Howard G. Buffett as Chairman.',
+    officialUrl: 'https://www.berkshirehathaway.com/news/2026news.html',
   },
   {
     id: 'taylor-morrison-close-2026',
+    publicationSlug: 'news-taylor-morrison-2026',
     date: 'July 24, 2026',
     year: '2026',
     category: 'Acquisitions',
     title: 'Berkshire Hathaway Completes Acquisition of Taylor Morrison',
     summary:
-      'Following regulatory approvals and closing conditions announced in May 2026, Berkshire Hathaway completed its $8.5 billion acquisition of Taylor Morrison Home Corporation.',
-    url: 'https://www.berkshirehathaway.com/news/2026news.html',
+      'Completion of the $8.5 billion acquisition of Taylor Morrison Home Corporation announced earlier in May 2026.',
+    officialUrl: 'https://www.berkshirehathaway.com/news/2026news.html',
   },
   {
     id: 'oxychem-close-2026',
+    publicationSlug: 'news-oxychem-2026',
     date: 'January 2, 2026',
     year: '2026',
     category: 'Acquisitions',
     title: 'Berkshire Hathaway Inc. Completes Acquisition of OxyChem',
     summary:
-      'Berkshire Hathaway finalized the acquisition of Occidental Chemical Corporation (OxyChem), expanding its industrial chemical manufacturing portfolio.',
-    url: 'https://www.berkshirehathaway.com/news/2026news.html',
+      'Official announcement confirming completion of the acquisition of Occidental Chemical Corporation (OxyChem).',
+    officialUrl: 'https://www.berkshirehathaway.com/news/2026news.html',
   },
   {
     id: 'leadership-2025',
+    publicationSlug: 'news-leadership-2025',
     date: 'December 8, 2025',
     year: '2025',
     category: 'Leadership',
     title: 'Berkshire Hathaway Announces Leadership Appointments',
     summary:
-      'Official announcement confirming senior executive leadership appointments ahead of Greg Abel assuming the role of Chief Executive Officer.',
-    url: 'https://www.berkshirehathaway.com/news/2025news.html',
+      'Official December 2025 press release outlining executive leadership appointments.',
+    officialUrl: 'https://www.berkshirehathaway.com/news/2025news.html',
   },
   {
     id: 'its-not-me-2025',
+    publicationSlug: 'news-fraud-notice-2025',
     date: 'November 6, 2025',
     year: '2025',
     category: 'Shareholder Notice',
     title: 'It’s Not Me — Official Notice on Fraudulent Endorsements',
     summary:
-      'Formal public notice warning investors and citizens against unauthorized use of Warren Buffett’s name, voice, or likeness in digital impersonations and social media.',
-    url: 'https://www.berkshirehathaway.com/news/2025news.html',
+      'Formal warning against fraudulent impersonations and unauthorized political or investment endorsements using Warren Buffett’s likeness.',
+    officialUrl: 'https://www.berkshirehathaway.com/news/2025news.html',
   },
 ];
 
@@ -433,7 +554,7 @@ export const GOVERNANCE_RESOURCES = [
   },
   {
     title: 'Prohibited Business Practices & Hotline',
-    detail: 'Confidential reporting channels administered independently for ethics and compliance concerns.',
+    detail: 'Confidential reporting channels overseen by the Audit Committee for ethics and compliance concerns.',
     url: 'https://www.berkshirehathaway.com/govern/govern.html',
   },
 ];
@@ -441,7 +562,7 @@ export const GOVERNANCE_RESOURCES = [
 export const SUSTAINABILITY_RESOURCES = [
   {
     title: 'Sustainability Leadership Council',
-    detail: 'Cross-subsidiary forum sharing operational best practices across energy, rail, manufacturing, and insurance.',
+    detail: 'Cross-subsidiary forum sharing operational initiatives across energy, rail, manufacturing, and insurance.',
     url: 'https://www.berkshirehathaway.com/sustainability/sustainabilityintro.html',
   },
   {
@@ -450,8 +571,8 @@ export const SUSTAINABILITY_RESOURCES = [
     url: 'https://www.berkshirehathaway.com/sustainability/sustainability.html',
   },
   {
-    title: 'Decentralized Subsidiary Initiatives',
-    detail: 'Individual environmental stewardship reporting by Berkshire Hathaway Energy, BNSF Railway, Johns Manville, and Shaw Industries.',
+    title: 'Subsidiary Environmental Disclosures',
+    detail: 'Individual environmental and operational reporting maintained by subsidiaries such as Berkshire Hathaway Energy and Johns Manville.',
     url: 'https://www.berkshirehathaway.com/sustainability/sustainabilityintro.html',
   },
 ];

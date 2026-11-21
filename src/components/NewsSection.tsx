@@ -1,11 +1,15 @@
 import { useMemo, useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { NEWS_ITEMS } from '../data/berkshireData';
 
 const YEAR_FILTERS: Array<'All' | '2026' | '2025'> = ['All', '2026', '2025'];
 
-export function NewsSection() {
+interface NewsSectionProps {
+  onOpenPublication: (slug: string) => void;
+}
+
+export function NewsSection({ onOpenPublication }: NewsSectionProps) {
   const [selectedYear, setSelectedYear] = useState<'All' | '2026' | '2025'>('All');
 
   const filteredItems = useMemo(() => {
@@ -18,7 +22,10 @@ export function NewsSection() {
   const archiveDispatches = filteredItems.slice(4);
 
   return (
-    <section id="news" className="bg-[#F9F7F3] text-[#0A1628] py-20 sm:py-24 lg:py-32 border-b border-[#0A1628]/10">
+    <section
+      id="news"
+      className="bg-[#F9F7F3] text-[#0A1628] py-20 sm:py-24 lg:py-32 border-b border-[#0A1628]/10"
+    >
       <div className="max-w-[1360px] mx-auto px-5 sm:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -40,7 +47,11 @@ export function NewsSection() {
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <div role="tablist" aria-label="Filter announcements by year" className="flex items-center gap-1.5">
+            <div
+              role="tablist"
+              aria-label="Filter announcements by year"
+              className="flex items-center gap-1.5"
+            >
               {YEAR_FILTERS.map((year) => {
                 const active = selectedYear === year;
                 return (
@@ -94,7 +105,13 @@ export function NewsSection() {
                 </div>
 
                 <h3 className="font-serif text-3xl sm:text-4xl font-medium leading-[1.15] text-[#F9F7F3]">
-                  {leadStory.title}
+                  <button
+                    type="button"
+                    onClick={() => onOpenPublication(leadStory.publicationSlug)}
+                    className="text-left hover:text-[#D4AF63] transition-colors"
+                  >
+                    {leadStory.title}
+                  </button>
                 </h3>
 
                 <p className="mt-5 text-base leading-relaxed text-[#F9F7F3]/80 max-w-xl">
@@ -102,15 +119,23 @@ export function NewsSection() {
                 </p>
               </div>
 
-              <div className="mt-10 pt-6 border-t border-white/15">
-                <a
-                  href={leadStory.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-4">
+                <button
+                  type="button"
+                  onClick={() => onOpenPublication(leadStory.publicationSlug)}
                   className="inline-flex items-center gap-2 text-sm font-medium text-[#D4AF63] hover:text-[#E2C27D] transition-colors"
                 >
-                  <span>Read Official Release at berkshirehathaway.com</span>
-                  <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                  <span>Open Announcement Record</span>
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </button>
+                <a
+                  href={leadStory.officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#F9F7F3]/70 hover:text-[#F9F7F3] transition-colors"
+                >
+                  <span>Official Source</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
               </div>
             </article>
@@ -124,15 +149,17 @@ export function NewsSection() {
                     <span className="font-sans uppercase tracking-[0.1em]">{item.category}</span>
                   </div>
                   <h3 className="font-serif text-xl sm:text-2xl font-medium text-[#0A1628]">
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-[#8B6B2B] transition-colors inline-flex items-baseline gap-2"
+                    <button
+                      type="button"
+                      onClick={() => onOpenPublication(item.publicationSlug)}
+                      className="text-left hover:text-[#8B6B2B] transition-colors inline-flex items-baseline gap-2"
                     >
                       <span>{item.title}</span>
-                      <ArrowUpRight className="w-4 h-4 shrink-0 translate-y-0.5" aria-hidden="true" />
-                    </a>
+                      <ArrowRight
+                        className="w-4 h-4 shrink-0 translate-y-0.5"
+                        aria-hidden="true"
+                      />
+                    </button>
                   </h3>
                   <p className="text-sm leading-relaxed text-[#2A3444]">{item.summary}</p>
                 </article>
@@ -163,19 +190,35 @@ export function NewsSection() {
                       <span className="font-sans">{item.category}</span>
                     </div>
                     <h3 className="font-serif text-xl font-medium text-[#0A1628] leading-snug">
-                      {item.title}
+                      <button
+                        type="button"
+                        onClick={() => onOpenPublication(item.publicationSlug)}
+                        className="text-left hover:text-[#8B6B2B] transition-colors"
+                      >
+                        {item.title}
+                      </button>
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-[#2A3444]">{item.summary}</p>
                   </div>
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors w-fit"
-                  >
-                    <span>Official Release</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  </a>
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={() => onOpenPublication(item.publicationSlug)}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors"
+                    >
+                      <span>Open Record</span>
+                      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    </button>
+                    <a
+                      href={item.officialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-[#5B6472] hover:text-[#0A1628] transition-colors"
+                    >
+                      <span>Official Source</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    </a>
+                  </div>
                 </article>
               ))}
             </div>

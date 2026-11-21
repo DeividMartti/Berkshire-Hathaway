@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
-import { BUSINESS_SEGMENTS, type BusinessSegment } from '../data/berkshireData';
+import {
+  BUSINESS_SEGMENTS,
+  INSURANCE_DIVISIONS,
+  type BusinessSegment,
+} from '../data/berkshireData';
 import { ResilientImage } from './ResilientImage';
 
 export function BusinessesSection() {
@@ -29,7 +33,7 @@ export function BusinessesSection() {
         >
           <div className="max-w-2xl">
             <p className="text-xs uppercase tracking-[0.16em] text-[#8B6B2B] font-semibold mb-4">
-              Operating Portfolio
+              Operating Structure
             </p>
             <h2
               className="font-serif font-medium tracking-[-0.02em] leading-[1.08] text-[#0A1628] text-balance"
@@ -50,6 +54,66 @@ export function BusinessesSection() {
           </a>
         </motion.div>
 
+        {/* Core Insurance & Reinsurance Architecture Band */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-10 bg-[#0A1628] text-[#F9F7F3] p-7 sm:p-10"
+        >
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-8 border-b border-white/15">
+            <div>
+              <div className="flex items-center gap-2.5 text-xs uppercase tracking-[0.14em] text-[#D4AF63] font-semibold mb-2">
+                <ShieldCheck className="w-4 h-4" aria-hidden="true" />
+                <span>Foundational Operating Core · Insurance &amp; Reinsurance</span>
+              </div>
+              <h3 className="font-serif text-2xl sm:text-3xl font-medium text-[#F9F7F3]">
+                Three Insurance Underwriting Divisions
+              </h3>
+            </div>
+            <p className="text-sm text-[#F9F7F3]/75 max-w-xl">
+              Property-casualty insurance and global reinsurance form the core capital foundation of
+              Berkshire Hathaway, structured across three major underwriting operations.
+            </p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {INSURANCE_DIVISIONS.map((division) => (
+              <div
+                key={division.name}
+                className="flex flex-col justify-between pt-4 border-t border-white/15"
+              >
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.12em] text-[#D4AF63] font-medium mb-1.5">
+                    {division.headquartersOrScope}
+                  </p>
+                  <h4 className="font-serif text-2xl font-medium text-[#F9F7F3] mb-3">
+                    {division.name}
+                  </h4>
+                  <p className="text-sm leading-relaxed text-[#F9F7F3]/78 mb-4">
+                    {division.description}
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-white/10 space-y-3">
+                  <p className="text-xs text-[#F9F7F3]/60 leading-relaxed">
+                    {division.entities.join(' · ')}
+                  </p>
+                  <a
+                    href={division.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#D4AF63] hover:text-[#E2C27D] transition-colors"
+                  >
+                    <span>Official Division Portal</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Interactive Sector Dossier */}
         <motion.div
           id="segment-spotlight"
@@ -57,7 +121,7 @@ export function BusinessesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10"
+          className="mt-14"
         >
           <div
             role="tablist"
@@ -92,14 +156,19 @@ export function BusinessesSection() {
             role="tabpanel"
             className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch bg-[#F9F7F3] border border-[#0A1628]/10 p-6 sm:p-8 lg:p-10"
           >
-            <div className="lg:col-span-6 overflow-hidden bg-[#EFECE5]">
-              <ResilientImage
-                src={activeSegment.imageSrc}
-                alt={activeSegment.imageAlt}
-                fallbackTitle={activeSegment.name}
-                className={`w-full h-full min-h-[260px] lg:min-h-[420px] object-cover ${activeSegment.imagePosition ?? 'object-center'}`}
-              />
-            </div>
+            <figure className="lg:col-span-6 flex flex-col">
+              <div className="overflow-hidden bg-[#EFECE5] flex-1">
+                <ResilientImage
+                  src={activeSegment.imageSrc}
+                  alt={activeSegment.imageAlt}
+                  fallbackTitle={activeSegment.name}
+                  className={`w-full h-full min-h-[260px] lg:min-h-[400px] object-cover ${activeSegment.imagePosition ?? 'object-center'}`}
+                />
+              </div>
+              <figcaption className="mt-2.5 text-[11px] font-serif italic text-[#4A5568]">
+                {activeSegment.imageCaption}
+              </figcaption>
+            </figure>
 
             <div className="lg:col-span-6 flex flex-col justify-between gap-6">
               <div>
@@ -126,7 +195,7 @@ export function BusinessesSection() {
 
               <div>
                 <p className="text-[11px] uppercase tracking-[0.14em] text-[#5B6472] font-semibold mb-3">
-                  Representative Operating Companies
+                  Key Operating Subsidiaries &amp; Groups
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {activeSegment.subsidiaries.map((sub) => (
@@ -157,9 +226,9 @@ export function BusinessesSection() {
           </div>
         </motion.div>
 
-        {/* Asymmetric Visual Overview of All 6 Segments */}
+        {/* Asymmetric Visual Overview of All 6 Core Business Groups */}
         <div className="mt-20 space-y-12">
-          {/* Row 1: Insurance (5 cols) + Railroad Panorama (7 cols) */}
+          {/* Row 1: Insurance & Reinsurance (5 cols) + BNSF Railway (7 cols) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
             <motion.article
               initial={{ opacity: 0, y: 16 }}
@@ -169,16 +238,21 @@ export function BusinessesSection() {
               className="lg:col-span-5 flex flex-col justify-between border border-[#0A1628]/10 bg-[#F9F7F3] p-6 sm:p-8"
             >
               <div>
-                <div className="overflow-hidden mb-6">
-                  <ResilientImage
-                    src={BUSINESS_SEGMENTS[0].imageSrc}
-                    alt={BUSINESS_SEGMENTS[0].imageAlt}
-                    fallbackTitle={BUSINESS_SEGMENTS[0].name}
-                    className="w-full aspect-[4/3] object-cover"
-                  />
-                </div>
+                <figure className="mb-6">
+                  <div className="overflow-hidden">
+                    <ResilientImage
+                      src={BUSINESS_SEGMENTS[0].imageSrc}
+                      alt={BUSINESS_SEGMENTS[0].imageAlt}
+                      fallbackTitle={BUSINESS_SEGMENTS[0].name}
+                      className="w-full aspect-[4/3] object-cover"
+                    />
+                  </div>
+                  <figcaption className="mt-2 text-[11px] font-serif italic text-[#4A5568]">
+                    {BUSINESS_SEGMENTS[0].imageCaption}
+                  </figcaption>
+                </figure>
                 <p className="text-xs font-mono text-[#8B6B2B] mb-2">
-                  01 · Insurance &amp; Reinsurance
+                  01 · GEICO · BH Primary Group · BH Reinsurance Group
                 </p>
                 <h3 className="font-serif text-2xl font-medium text-[#0A1628] mb-3">
                   {BUSINESS_SEGMENTS[0].name}
@@ -189,14 +263,15 @@ export function BusinessesSection() {
               </div>
               <div className="mt-6 pt-4 border-t border-[#0A1628]/10 flex items-center justify-between gap-4">
                 <span className="text-xs text-[#5B6472]">
-                  GEICO · General Re · National Indemnity
+                  GEICO · Primary Group · Reinsurance Group
                 </span>
                 <button
                   type="button"
                   onClick={() => handleSelectSegment(BUSINESS_SEGMENTS[0])}
-                  className="text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
                 >
-                  Inspect Dossier →
+                  <span>Inspect Dossier</span>
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
               </div>
             </motion.article>
@@ -209,14 +284,19 @@ export function BusinessesSection() {
               className="lg:col-span-7 flex flex-col justify-between bg-[#0A1628] text-[#F9F7F3] p-6 sm:p-8"
             >
               <div>
-                <div className="overflow-hidden mb-6">
-                  <ResilientImage
-                    src={BUSINESS_SEGMENTS[1].imageSrc}
-                    alt={BUSINESS_SEGMENTS[1].imageAlt}
-                    fallbackTitle={BUSINESS_SEGMENTS[1].name}
-                    className="w-full aspect-[16/9] object-cover"
-                  />
-                </div>
+                <figure className="mb-6">
+                  <div className="overflow-hidden">
+                    <ResilientImage
+                      src={BUSINESS_SEGMENTS[1].imageSrc}
+                      alt={BUSINESS_SEGMENTS[1].imageAlt}
+                      fallbackTitle={BUSINESS_SEGMENTS[1].name}
+                      className="w-full aspect-[16/9] object-cover"
+                    />
+                  </div>
+                  <figcaption className="mt-2 text-[11px] font-serif italic text-[#F9F7F3]/60">
+                    {BUSINESS_SEGMENTS[1].imageCaption}
+                  </figcaption>
+                </figure>
                 <p className="text-xs font-mono text-[#D4AF63] mb-2">
                   02 · Freight Infrastructure
                 </p>
@@ -234,15 +314,16 @@ export function BusinessesSection() {
                 <button
                   type="button"
                   onClick={() => handleSelectSegment(BUSINESS_SEGMENTS[1])}
-                  className="text-xs font-semibold text-[#D4AF63] hover:text-[#E2C27D] transition-colors whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#D4AF63] hover:text-[#E2C27D] transition-colors whitespace-nowrap shrink-0"
                 >
-                  Inspect Dossier →
+                  <span>Inspect Dossier</span>
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
               </div>
             </motion.article>
           </div>
 
-          {/* Row 2: Energy Full-Bleed Horizontal Feature (7 cols image + 5 cols prose) */}
+          {/* Row 2: Berkshire Hathaway Energy Horizontal Feature */}
           <motion.article
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -250,18 +331,23 @@ export function BusinessesSection() {
             transition={{ duration: 0.5 }}
             className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch border border-[#0A1628]/12 bg-[#EFECE5]/65 p-6 sm:p-8"
           >
-            <div className="lg:col-span-7 overflow-hidden">
-              <ResilientImage
-                src={BUSINESS_SEGMENTS[2].imageSrc}
-                alt={BUSINESS_SEGMENTS[2].imageAlt}
-                fallbackTitle={BUSINESS_SEGMENTS[2].name}
-                className="w-full h-full aspect-[16/9] object-cover"
-              />
-            </div>
+            <figure className="lg:col-span-7 flex flex-col">
+              <div className="overflow-hidden flex-1">
+                <ResilientImage
+                  src={BUSINESS_SEGMENTS[2].imageSrc}
+                  alt={BUSINESS_SEGMENTS[2].imageAlt}
+                  fallbackTitle={BUSINESS_SEGMENTS[2].name}
+                  className="w-full h-full aspect-[16/9] object-cover"
+                />
+              </div>
+              <figcaption className="mt-2 text-[11px] font-serif italic text-[#4A5568]">
+                {BUSINESS_SEGMENTS[2].imageCaption}
+              </figcaption>
+            </figure>
             <div className="lg:col-span-5 flex flex-col justify-between">
               <div>
                 <p className="text-xs font-mono text-[#8B6B2B] mb-2">
-                  03 · Utilities &amp; Transmission
+                  03 · Utilities, Pipelines &amp; Power Generation
                 </p>
                 <h3 className="font-serif text-2xl sm:text-3xl font-medium text-[#0A1628] mb-3">
                   {BUSINESS_SEGMENTS[2].name}
@@ -280,15 +366,16 @@ export function BusinessesSection() {
                 <button
                   type="button"
                   onClick={() => handleSelectSegment(BUSINESS_SEGMENTS[2])}
-                  className="text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
                 >
-                  Inspect Dossier →
+                  <span>Inspect Dossier</span>
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
               </div>
             </div>
           </motion.article>
 
-          {/* Row 3: Manufacturing / Retailing / Services — Asymmetric Editorial Trio with Distinct Framing */}
+          {/* Row 3: Manufacturing, Service & McLane, Retailing & Pilot */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {BUSINESS_SEGMENTS.slice(3).map((segment, idx) => (
               <motion.article
@@ -306,20 +393,23 @@ export function BusinessesSection() {
                       Operating Segment
                     </span>
                   </div>
-                  <div className="overflow-hidden mb-5 bg-[#EFECE5]">
-                    <ResilientImage
-                      src={segment.imageSrc}
-                      alt={segment.imageAlt}
-                      fallbackTitle={segment.name}
-                      className={`w-full aspect-[4/3] object-cover ${segment.imagePosition ?? 'object-center'}`}
-                    />
-                  </div>
+                  <figure className="mb-5">
+                    <div className="overflow-hidden bg-[#EFECE5]">
+                      <ResilientImage
+                        src={segment.imageSrc}
+                        alt={segment.imageAlt}
+                        fallbackTitle={segment.name}
+                        className={`w-full aspect-[4/3] object-cover ${segment.imagePosition ?? 'object-center'}`}
+                      />
+                    </div>
+                    <figcaption className="mt-2 text-[11px] font-serif italic text-[#4A5568]">
+                      {segment.imageCaption}
+                    </figcaption>
+                  </figure>
                   <h3 className="font-serif text-2xl font-medium text-[#0A1628] mb-2.5">
                     {segment.name}
                   </h3>
-                  <p className="text-sm leading-relaxed text-[#2A3444]">
-                    {segment.summary}
-                  </p>
+                  <p className="text-sm leading-relaxed text-[#2A3444]">{segment.summary}</p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#0A1628]/10 flex items-center justify-between gap-3">
@@ -332,9 +422,10 @@ export function BusinessesSection() {
                   <button
                     type="button"
                     onClick={() => handleSelectSegment(segment)}
-                    className="text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#0A1628] hover:text-[#8B6B2B] transition-colors whitespace-nowrap shrink-0"
                   >
-                    Inspect Dossier →
+                    <span>Inspect Dossier</span>
+                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
                 </div>
               </motion.article>

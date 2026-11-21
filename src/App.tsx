@@ -14,36 +14,36 @@ import { PhilosophySection } from './components/PhilosophySection';
 import { NewsSection } from './components/NewsSection';
 import { GovernanceSustainabilitySection } from './components/GovernanceSustainabilitySection';
 import { Footer } from './components/Footer';
-import { ShareholderPostView } from './components/ShareholderPostView';
-import { SHAREHOLDER_POSTS } from './data/shareholderPosts';
+import { PublicationView } from './components/PublicationView';
+import { PUBLICATIONS } from './data/publications';
 
 function parsePublicationHash(hash: string): string | null {
   const prefix = '#publication/';
   if (!hash.startsWith(prefix)) return null;
   const slug = hash.slice(prefix.length);
-  return SHAREHOLDER_POSTS.some((p) => p.slug === slug) ? slug : null;
+  return PUBLICATIONS.some((p) => p.slug === slug) ? slug : null;
 }
 
 export default function App() {
-  const [activePostSlug, setActivePostSlug] = useState<string | null>(() =>
+  const [activeSlug, setActiveSlug] = useState<string | null>(() =>
     parsePublicationHash(window.location.hash)
   );
 
   useEffect(() => {
     const handleHashChange = () => {
-      setActivePostSlug(parsePublicationHash(window.location.hash));
+      setActiveSlug(parsePublicationHash(window.location.hash));
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const openPost = useCallback((slug: string) => {
-    setActivePostSlug(slug);
+  const openPublication = useCallback((slug: string) => {
+    setActiveSlug(slug);
     window.history.pushState(null, '', `#publication/${slug}`);
   }, []);
 
   const navigateToSection = useCallback((sectionHash: string) => {
-    setActivePostSlug(null);
+    setActiveSlug(null);
     window.history.pushState(null, '', sectionHash);
     requestAnimationFrame(() => {
       const targetId = sectionHash.replace(/^#/, '');
@@ -58,9 +58,12 @@ export default function App() {
     });
   }, []);
 
-  const activePost = activePostSlug
-    ? SHAREHOLDER_POSTS.find((p) => p.slug === activePostSlug) ?? null
+  const activePublication = activeSlug
+    ? PUBLICATIONS.find((p) => p.slug === activeSlug) ?? null
     : null;
+
+  const backTargetHash =
+    activePublication?.category === 'Corporate Announcements' ? '#news' : '#investors';
 
   return (
     <MotionConfig reducedMotion="user">
@@ -74,29 +77,35 @@ export default function App() {
           Skip to main content
         </a>
 
-        <Navbar onNavigateSection={navigateToSection} forceSolid={Boolean(activePost)} />
+        <Navbar
+          onNavigateSection={navigateToSection}
+          forceSolid={Boolean(activePublication)}
+        />
 
         <main id="main-content" className="flex-1">
-          {activePost ? (
-            <ShareholderPostView
-              post={activePost}
-              onSelectPost={openPost}
-              onBackToInvestors={() => navigateToSection('#investors')}
+          {activePublication ? (
+            <PublicationView
+              publication={activePublication}
+              onSelectPublication={openPublication}
+              onBackToOrigin={() => navigateToSection(backTargetHash)}
             />
           ) : (
             <>
               <HeroSection />
               <AboutSection />
               <BusinessesSection />
-              <InvestorsSection onOpenPost={openPost} />
+              <InvestorsSection onOpenPublication={openPublication} />
               <PhilosophySection />
-              <NewsSection />
-              <GovernanceSustainabilitySection onOpenPost={openPost} />
+              <NewsSection onOpenPublication={openPublication} />
+              <GovernanceSustainabilitySection onOpenPublication={openPublication} />
             </>
           )}
         </main>
 
-        <Footer onOpenPost={openPost} onNavigateSection={navigateToSection} />
+        <Footer
+          onOpenPublication={openPublication}
+          onNavigateSection={navigateToSection}
+        />
       </div>
     </MotionConfig>
   );

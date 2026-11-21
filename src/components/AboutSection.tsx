@@ -31,10 +31,10 @@ export function AboutSection() {
             <div className="mt-8 space-y-6 text-base leading-[1.78] text-[#2A3444] max-w-prose">
               <p className="first-letter:font-serif first-letter:text-5xl first-letter:font-semibold first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none first-letter:text-[#0A1628]">
                 Headquartered at 3555 Farnam Street in Omaha, Nebraska, Berkshire Hathaway Inc. is
-                a holding company owning subsidiaries engaged in diverse business activities
-                ranging from property-casualty insurance and freight rail transportation to
-                regulated energy utilities, industrial manufacturing, retailing, and specialized
-                services.
+                a holding company owning subsidiaries engaged in diverse business activities—led by
+                property-casualty insurance and global reinsurance alongside freight rail
+                transportation, regulated energy and utility infrastructure, manufacturing, and
+                service and retailing enterprises including McLane and Pilot.
               </p>
               <p>
                 What distinguishes Berkshire Hathaway is not simply the breadth of its operating

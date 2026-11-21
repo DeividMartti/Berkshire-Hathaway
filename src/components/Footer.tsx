@@ -2,11 +2,11 @@ import { ArrowUp, ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface FooterProps {
-  onOpenPost: (slug: string) => void;
+  onOpenPublication: (slug: string) => void;
   onNavigateSection: (href: string) => void;
 }
 
-export function Footer({ onOpenPost, onNavigateSection }: FooterProps) {
+export function Footer({ onOpenPublication, onNavigateSection }: FooterProps) {
   const handleSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     onNavigateSection(href);
@@ -32,8 +32,9 @@ export function Footer({ onOpenPost, onNavigateSection }: FooterProps) {
               BERKSHIRE HATHAWAY INC.
             </a>
             <p className="mt-4 text-sm leading-relaxed text-[#F9F7F3]/70 max-w-sm">
-              A diversified American holding company committed to long-term capital allocation,
-              decentralized operating autonomy, and enduring value for shareholders.
+              A diversified American holding company encompassing insurance and reinsurance,
+              freight rail transportation, regulated energy utilities, manufacturing, and service
+              and retailing enterprises.
             </p>
             <div className="mt-6 text-xs leading-relaxed text-[#F9F7F3]/60 space-y-1">
               <p className="font-semibold text-[#F9F7F3]/85">Corporate Headquarters</p>
@@ -108,7 +109,7 @@ export function Footer({ onOpenPost, onNavigateSection }: FooterProps) {
               <li>
                 <button
                   type="button"
-                  onClick={() => onOpenPost('annual-reports')}
+                  onClick={() => onOpenPublication('annual-interim-reports')}
                   className="hover:text-[#F9F7F3] transition-colors text-left"
                 >
                   Annual &amp; Interim Reports
@@ -117,43 +118,52 @@ export function Footer({ onOpenPost, onNavigateSection }: FooterProps) {
               <li>
                 <button
                   type="button"
-                  onClick={() => onOpenPost('shareholder-letters')}
+                  onClick={() => onOpenPublication('warren-buffett-letters')}
                   className="hover:text-[#F9F7F3] transition-colors text-left"
                 >
-                  Letters to Shareholders
+                  Warren Buffett’s Letters
                 </button>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={() => onOpenPost('sec-filings')}
+                  onClick={() => onOpenPublication('greg-abel-letters')}
                   className="hover:text-[#F9F7F3] transition-colors text-left"
                 >
-                  SEC Filings (EDGAR)
+                  Greg Abel’s Letters
                 </button>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={() => onOpenPost('annual-meeting')}
+                  onClick={() => onOpenPublication('special-letters-warren-charlie')}
                   className="hover:text-[#F9F7F3] transition-colors text-left"
                 >
-                  Annual Shareholders Meeting
+                  Special Letters (Warren &amp; Charlie)
                 </button>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={() => onOpenPost('stock-info')}
+                  onClick={() => onOpenPublication('wesco-charlie-munger-letters')}
                   className="hover:text-[#F9F7F3] transition-colors text-left"
                 >
-                  Class A &amp; B Stock Comparison
+                  Charlie Munger’s Wesco Letters
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onOpenPublication('sec-filings')}
+                  className="hover:text-[#F9F7F3] transition-colors text-left"
+                >
+                  SEC Filings
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Governance & Legal */}
+          {/* Governance, Stock & Legal */}
           <div className="lg:col-span-3">
             <h3 className="text-xs uppercase tracking-[0.14em] text-[#D4AF63] font-semibold mb-4">
               Governance &amp; Legal
@@ -162,33 +172,38 @@ export function Footer({ onOpenPost, onNavigateSection }: FooterProps) {
               <li>
                 <button
                   type="button"
-                  onClick={() => onOpenPost('governance-docs')}
+                  onClick={() => onOpenPublication('annual-meeting-information')}
                   className="hover:text-[#F9F7F3] transition-colors text-left"
                 >
-                  Corporate Governance Guidelines
+                  Annual Meeting Information
                 </button>
               </li>
               <li>
-                <a
-                  href="https://www.berkshirehathaway.com/sustainability/sustainabilityintro.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 hover:text-[#F9F7F3] transition-colors"
+                <button
+                  type="button"
+                  onClick={() => onOpenPublication('common-stock-information')}
+                  className="hover:text-[#F9F7F3] transition-colors text-left"
                 >
-                  <span>Sustainability &amp; Diversity</span>
-                  <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
-                </a>
+                  Common Stock Information
+                </button>
               </li>
               <li>
-                <a
-                  href="https://www.berkshirehathaway.com/news/2025news.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 hover:text-[#F9F7F3] transition-colors"
+                <button
+                  type="button"
+                  onClick={() => onOpenPublication('corporate-governance')}
+                  className="hover:text-[#F9F7F3] transition-colors text-left"
                 >
-                  <span>Fraud &amp; Impersonation Notice</span>
-                  <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
-                </a>
+                  Corporate Governance
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onOpenPublication('sustainability-disclosures')}
+                  className="hover:text-[#F9F7F3] transition-colors text-left"
+                >
+                  Sustainability
+                </button>
               </li>
               <li>
                 <a
@@ -212,7 +227,7 @@ export function Footer({ onOpenPost, onNavigateSection }: FooterProps) {
               Hathaway Inc.
             </p>
             <p className="leading-relaxed">
-              This digital concept preserves verified institutional facts and links directly to
+              This independent concept preserves verified institutional facts and links directly to
               official publications at{' '}
               <a
                 href="https://www.berkshirehathaway.com/"
@@ -222,8 +237,8 @@ export function Footer({ onOpenPost, onNavigateSection }: FooterProps) {
               >
                 berkshirehathaway.com
               </a>
-              . Photography serves as illustrative editorial representation and does not depict
-              specific proprietary facilities.
+              . All photographic visuals are illustrative editorial imagery and do not depict
+              official facilities, personnel, or operations of Berkshire Hathaway.
             </p>
           </div>
 

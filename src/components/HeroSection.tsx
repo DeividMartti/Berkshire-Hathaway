@@ -96,6 +96,11 @@ export function HeroSection() {
             </div>
           ))}
         </div>
+        <div className="max-w-[1360px] mx-auto px-5 sm:px-8 lg:px-12 pb-3">
+          <p className="text-[11px] text-[#F9F7F3]/50 italic">
+            {HERO_IMAGE.caption}
+          </p>
+        </div>
       </div>
     </section>
   );

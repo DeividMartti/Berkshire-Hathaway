@@ -3,11 +3,11 @@ import { motion } from 'motion/react';
 import { GOVERNANCE_RESOURCES, SUSTAINABILITY_RESOURCES } from '../data/berkshireData';
 
 interface GovernanceSustainabilitySectionProps {
-  onOpenPost: (slug: string) => void;
+  onOpenPublication: (slug: string) => void;
 }
 
 export function GovernanceSustainabilitySection({
-  onOpenPost,
+  onOpenPublication,
 }: GovernanceSustainabilitySectionProps) {
   return (
     <section className="bg-[#FFFFFF] text-[#0A1628] py-20 sm:py-24 lg:py-32">
@@ -63,7 +63,7 @@ export function GovernanceSustainabilitySection({
                   <button
                     key={item.title}
                     type="button"
-                    onClick={() => onOpenPost('governance-docs')}
+                    onClick={() => onOpenPublication('corporate-governance')}
                     className="group w-full text-left py-4 flex items-start justify-between gap-4 hover:bg-white/[0.03] transition-colors"
                   >
                     <div>
@@ -83,15 +83,24 @@ export function GovernanceSustainabilitySection({
               </div>
             </div>
 
-            <div className="mt-8 pt-2">
+            <div className="mt-8 pt-2 flex flex-wrap items-center gap-3">
               <button
                 type="button"
-                onClick={() => onOpenPost('governance-docs')}
+                onClick={() => onOpenPublication('corporate-governance')}
                 className="inline-flex items-center gap-2 px-5 py-3 text-xs font-medium tracking-wide bg-[#D4AF63] text-[#0A1628] hover:bg-[#E2C27D] transition-colors whitespace-nowrap shrink-0"
               >
-                <span>Read Governance &amp; Charters Dossier</span>
+                <span>Open Governance Publication</span>
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </button>
+              <a
+                href="https://www.berkshirehathaway.com/govern/govern.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-3 text-xs font-medium border border-white/20 text-[#F9F7F3]/85 hover:border-[#D4AF63] hover:text-[#D4AF63] transition-colors whitespace-nowrap shrink-0"
+              >
+                <span>Official Source</span>
+                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </a>
             </div>
           </motion.div>
 
@@ -117,19 +126,18 @@ export function GovernanceSustainabilitySection({
               </h3>
 
               <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#2A3444]">
-                Consistent with our operating model, sustainability initiatives are led directly by
-                each operating subsidiary—where engineering, utility, rail, and manufacturing teams
-                implement tailored improvements alongside consolidated EEO-1 workforce transparency.
+                Consistent with our operating model, sustainability initiatives are managed directly
+                by each operating subsidiary alongside the Berkshire Hathaway Sustainability
+                Leadership Council and consolidated EEO-1 workforce transparency.
               </p>
 
               <div className="mt-8 divide-y divide-[#0A1628]/12 border-y border-[#0A1628]/12">
                 {SUSTAINABILITY_RESOURCES.map((item) => (
-                  <a
+                  <button
                     key={item.title}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group py-4 flex items-start justify-between gap-4 hover:bg-black/[0.02] transition-colors"
+                    type="button"
+                    onClick={() => onOpenPublication('sustainability-disclosures')}
+                    className="group w-full text-left py-4 flex items-start justify-between gap-4 hover:bg-black/[0.02] transition-colors"
                   >
                     <div>
                       <span className="block text-sm font-medium text-[#0A1628] group-hover:text-[#8B6B2B] transition-colors">
@@ -139,24 +147,32 @@ export function GovernanceSustainabilitySection({
                         {item.detail}
                       </span>
                     </div>
-                    <ArrowUpRight
+                    <ArrowRight
                       className="w-4 h-4 text-[#8B6B2B] shrink-0 mt-1"
                       aria-hidden="true"
                     />
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
 
-            <div className="mt-8 pt-2">
+            <div className="mt-8 pt-2 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => onOpenPublication('sustainability-disclosures')}
+                className="inline-flex items-center gap-2 px-5 py-3 text-xs font-medium tracking-wide bg-[#0A1628] text-[#F9F7F3] hover:bg-[#172844] transition-colors whitespace-nowrap shrink-0"
+              >
+                <span>Open Sustainability Publication</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </button>
               <a
                 href="https://www.berkshirehathaway.com/sustainability/sustainabilityintro.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 text-xs font-medium tracking-wide bg-[#0A1628] text-[#F9F7F3] hover:bg-[#172844] transition-colors whitespace-nowrap shrink-0"
+                className="inline-flex items-center gap-1.5 px-4 py-3 text-xs font-medium border border-[#0A1628]/25 text-[#0A1628] hover:border-[#0A1628] transition-colors whitespace-nowrap shrink-0"
               >
-                <span>View Sustainability &amp; Diversity Disclosures</span>
-                <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                <span>Official Source</span>
+                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
               </a>
             </div>
           </motion.div>
