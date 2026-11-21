@@ -1,0 +1,8 @@
+{
+  "name": "Berkshire Hathaway — Corporate Redesign Concept",
+  "description": "An independent editorial and institutional website redesign concept for Berkshire Hathaway Inc., honoring long-term capital stewardship, operating subsidiaries, and shareholder transparency.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
